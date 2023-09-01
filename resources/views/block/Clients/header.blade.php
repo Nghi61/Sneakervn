@@ -3,6 +3,7 @@
 $Categories = DB::table('Categories')
                 ->whereNotIn('name', ['nam', 'nữ','không xác định'])
                 ->get();
+                use App\Helpers\RoleHelper;
 
     @endphp
     <div class="layer"></div><!-- Mobile menu overlay mask -->
@@ -121,41 +122,39 @@ $Categories = DB::table('Categories')
                 </div>
                 <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
                     <div class="custom-search-input">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm">
-                        <button type="submit"><i class="header-icon_search_custom"></i></button>
+                        <form action="{{ route('search') }}" method="post">
+                            @csrf
+                            <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm">
+                            <button type="submit"><i class="header-icon_search_custom"></i></button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
                         <li>
                             <div class="dropdown dropdown-cart">
-                                <a href="cart.html" class="cart_bt"><strong>2</strong></a>
+                                <a href="{{ route('cart')}}" class="cart_bt">@if(session('cart'))<strong></strong>@endif</a>
                                 <div class="dropdown-menu">
+                                    @if (session('cart') && !is_null(session('cart')))
+                                    @foreach (session('cart') as $row)
                                     <ul>
                                         <li>
-                                            <a href="product-detail-1.html">
+                                            <a href="/product/detail/{{$row['idProduct']}}">
                                                 <figure><img src="img/products/product_placeholder_square_small.jpg"
-                                                        data-src="img/products/shoes/thumb/1.jpg" alt=""
+                                                        data-src="{{ asset($row['urlHinh']) }}" alt=""
                                                         width="50" height="50" class="lazy"></figure>
-                                                <strong><span>1x Armor Air x Fear</span>$90.00</strong>
+                                                <strong><span>{{$row['name']}}</span>{{ number_format($row['price'], 0, ',', '.') }}</strong>
                                             </a>
-                                            <a href="#0" class="action"><i class="ti-trash"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="product-detail-1.html">
-                                                <figure><img src="img/products/product_placeholder_square_small.jpg"
-                                                        data-src="img/products/shoes/thumb/2.jpg" alt=""
-                                                        width="50" height="50" class="lazy"></figure>
-                                                <strong><span>1x Armor Okwahn II</span>$110.00</strong>
-                                            </a>
-                                            <a href="0.html" class="action"><i class="ti-trash"></i></a>
+                                            <a href="/cart/delete/{{$row['idProduct']}}" class="action"><i class="ti-trash"></i></a>
                                         </li>
                                     </ul>
                                     <div class="total_drop">
                                         <div class="clearfix"><strong>Tổng:</strong><span>$200.00</span></div>
-                                        <a href="cart.html" class="btn_1 outline">Chi tiết</a><a href="checkout.html"
+                                    @endforeach
+                                        <a href="" class="btn_1 outline">Chi tiết</a><a href="checkout.html"
                                             class="btn_1">Thanh toán</a>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <!-- /dropdown-cart-->
@@ -171,6 +170,11 @@ $Categories = DB::table('Categories')
                                         <div class="ms-3">Xin chào, <i
                                                 class="text-info">{{ Auth::user()->name }}</i></div>
                                         <ul>
+                                            @if(Auth::user()->role==0)
+                                            <li>
+                                                <a href="{{ route('admin') }}"><i class="ti-window"></i>Quản lý Website</a>
+                                            </li>
+                                            @endif
                                             <li>
                                                 <a href="{{ route('trackOrder') }}"><i class="ti-truck"></i>Theo dõi
                                                     đơn hàng</a>
@@ -207,13 +211,6 @@ $Categories = DB::table('Categories')
                                             <li>
                                                 <a href="{{ route('trackOrder') }}"><i class="ti-truck"></i>Theo dõi
                                                     đơn hàng</a>
-                                            </li>
-                                            <li>
-                                                <a href="account.html"><i class="ti-package"></i>Đơn hàng của
-                                                    tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="/profile"><i class="ti-user"></i>Hồ sơ cá nhân</a>
                                             </li>
                                             <li>
                                                 <a href="{{ route('help') }}"><i class="ti-help-alt"></i>Giúp

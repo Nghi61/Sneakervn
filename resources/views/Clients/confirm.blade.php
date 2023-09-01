@@ -13,8 +13,8 @@
                             </g>
                         </svg>
                     </div>
-                <h2>Order completed!</h2>
-                <p>You will receive a confirmation email soon!</p>
+                <h2>Đặt hàng hoàn tất!</h2>
+                <p>Thông tin đơn hàng sẽ được gửi về Email của bạn!</p>
                 </div>
             </div>
         </div>

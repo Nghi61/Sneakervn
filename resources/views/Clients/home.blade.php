@@ -72,7 +72,7 @@
     <ul id="banners_grid" class="clearfix">
         <li>
             <a href="#0" class="img_container">
-                <img src="img/banners_cat_placeholder.jpg" data-src="img/banner_1.jpg" alt=""
+                <img src="{{ asset('img/banners_cat_placeholder.jpg') }}" data-src="img/banner_1.jpg" alt=""
                     class="lazy">
                 <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                     <h3>Giày Nam</h3>

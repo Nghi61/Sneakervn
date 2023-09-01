@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'phone' => '0353681506',
             'gender' => (string) 0,
             'avatar' => 'img/avatar/1_carousel.jpg',
-            'birthday' =>  '11/10/2003',
+            'birthday' =>  '2003/11/10',
         ]);
 
     }
