@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comments extends Model
+class CommentsModel extends Model
 {
     use HasFactory;
     protected $table='comments';
-    protected $fillable=['idUser','idProduct','content'];
+    protected $fillable=['idProduct','content','idUser'];
 }

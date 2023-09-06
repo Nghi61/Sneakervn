@@ -44,8 +44,8 @@
                             <div class="container">
                                 <div class="card-header">
                                     <h5 class="mb-3">
-                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapse-A" aria-expanded="false"
-                                            aria-controls="collapse-A">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapse-A"
+                                            aria-expanded="false" aria-controls="collapse-A">
                                             Mô tả
                                         </a>
                                     </h5>
@@ -80,16 +80,19 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-lg-7 col-md-6">
-                                @if ($Pro->sale<=0)
-                                <div class="price_main"> <span
-                                    class="new_price">{{ number_format($Pro->price, 0, ',', '.') }} đ</span></div>
-                                @else
-                                <div class="price_main"><span class="new_price">{{ number_format($Pro->sale, 0, ',', '.') }}đ</span><span
-                                    class="percentage">{{round(($Pro->price-$Pro->sale)/$Pro->price*100)}}%</span>  <span
-                                    class="old_price">{{ number_format($Pro->price, 0, ',', '.') }} đ</span></div>
-                                @endif
+                                        @if ($Pro->sale <= 0)
+                                            <div class="price_main"> <span
+                                                    class="new_price">{{ number_format($Pro->price, 0, ',', '.') }}
+                                                    đ</span></div>
+                                        @else
+                                            <div class="price_main"><span
+                                                    class="new_price">{{ number_format($Pro->sale, 0, ',', '.') }}đ</span><span
+                                                    class="percentage">{{ round((($Pro->price - $Pro->sale) / $Pro->price) * 100) }}%</span>
+                                                <span class="old_price">{{ number_format($Pro->price, 0, ',', '.') }}
+                                                    đ</span></div>
+                                        @endif
                                     </div>
-                                    <input type="hidden" name="id" value="{{$Pro->id}}">
+                                    <input type="hidden" name="id" value="{{ $Pro->id }}">
                                     <div class="col-lg-5 col-md-6">
                                         <div class="btn_add_to_cart"><button href="" class="btn_1">Thêm vào giỏ
                                                 hàng</button>
@@ -121,7 +124,9 @@
                         <div class="comment">
                             <div class="comment-info row">
                                 <div class="col">
-                                    <span class="comment-author">Tác giả: {{ $row->idUser }}</span>
+                                    @foreach ($row->name as $author)
+                                        <span class="comment-author">Tác giả: {{ $author['name'] }}</span>
+                                    @endforeach
                                 </div>
                                 <div class="col text-end">
                                     <span class="comment-date">{{ $row->created_at }}</span>
@@ -134,13 +139,15 @@
 
                 @if (Auth::check())
                     <textarea id="commentText" rows="4" cols="50" class="w-100"></textarea>
-                    <input type="hidden" id="name" value="{{ Auth::user()->id }}">
+                    <input type="hidden" id="id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" id="name" value="{{ Auth::user()->name }}">
                     <input type="hidden" id="email" value="{{ Auth::user()->email }}">
                     <input type="hidden" id="idPro" value="{{ $Pro->id }}">
                     <br>
                     <button id="submitComment" class="btn btn-warning mt-3">Gửi bình luận</button>
                 @else
-                    <h5 class="text-center mt-5"> <a class="text-decoration-none text-danger" href="/accounts">Đăng nhập</a>
+                    <h5 class="text-center mt-5"> <a class="text-decoration-none text-danger" href="/accounts">Đăng
+                            nhập</a>
                         để bình
                         luận</h5>
                 @endif
@@ -170,7 +177,8 @@
                     $("#submitComment").click(function() {
                         // Lấy nội dung bình luận từ ô textarea
                         var commentContent = $("#commentText").val();
-                        var idUser = $("#name").val();
+                        var idUser = $("#id").val();
+                        var name = $("#name").val();
                         var idPro = $("#idPro").val();
 
                         // Kiểm tra xem người dùng đã nhập nội dung bình luận hay chưa
@@ -200,7 +208,7 @@
                                         '<div class="comment">' +
                                         '<div class="comment-info row">' +
                                         '<div class="col">' +
-                                        '<span class="comment-author">Tác giả: ' + idUser + '</span>' +
+                                        '<span class="comment-author">Tác giả: ' + name + '</span>' +
                                         '</div>' +
                                         '<div class="col text-end">' +
                                         '<span class="comment-date">' + getCurrentDateTime() +
@@ -241,24 +249,23 @@
                     <!-- /item -->
                     @foreach ($related as $hot)
                         <div class="grid_item">
-                            @if ($hot->sale>0&&(($hot->price-$hot->sale)/$hot->price*100)>0)
-                            <span class="ribbon off">{{round(($hot->price-$hot->sale)/$hot->price*100)}}%</span>
+                            @if ($hot->sale > 0 && (($hot->price - $hot->sale) / $hot->price) * 100 > 0)
+                                <span class="ribbon off">{{ round((($hot->price - $hot->sale) / $hot->price) * 100) }}%</span>
                             @else
-                            <span class="ribbon new">New</span>
+                                <span class="ribbon new">New</span>
                             @endif
                             <figure>
                                 <a href="{{ route('product.detail', ['id' => $hot->id]) }}">
-                                    <img class="img-fluid lazy"
-                                        src="img/products/product_placeholder_square_medium.jpg"
+                                    <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg"
                                         data-src="{{ asset($hot->urlHinh) }}" alt="" width="400"
                                         height="400">
                                 </a>
                             </figure>
                             <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star"></i></div>
-                            <a href="/product/detail/{{$hot->id}}">
-                                <h3>{{$hot->name}}</h3>
+                                    class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
+                            </div>
+                            <a href="/product/detail/{{ $hot->id }}">
+                                <h3>{{ $hot->name }}</h3>
                             </a>
                             <div class="price_box">
                                 <span class="new_price">{{ number_format($hot->price, 0, ',', '.') }} vnđ</span>

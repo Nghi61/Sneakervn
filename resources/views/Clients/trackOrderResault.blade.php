@@ -11,7 +11,7 @@
                         @csrf
                         <div class="search_bar">
                             <input type="text" name="MHD" class="form-control" placeholder="Mã đơn hàng">
-                            <input type="submit" value="Search">
+                            <input type="submit" value="Tìm kiếm">
                         </div>
                     </form>
                 </div>
@@ -25,10 +25,10 @@
                             <th >Họ tên</th>
                             <th >Email</th>
                             <th>Số điện thoại</th>
-                            <th>Tổng tiền</th>
                             <th>Địa chỉ</th>
                             <th>Thanh toán</th>
                             <th>Giao hàng</th>
+                            <th>Tổng tiền</th>
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
@@ -38,20 +38,30 @@
                             <td class="customer_name">{{ $bill->name }}</td>
                             <td class="email">{{ $bill->email }}</td>
                             <td class="phone">{{ $bill->phone }}</td>
-                            <td class="total">{{ $bill->total}}</td>
                             <td class="address">{{ $bill->address}}</td>
                             <td class="payment">{{ $bill->payment}}</td>
                             <td class="delivery">{{ $bill->delivery}}</td>
-                            <td class="status"><span
-                                    class="badge bg-success-subtle text-success text-uppercase">{{ $bill->status }}</span>
+                            <td class="total">{{ $bill->total}}</td>
+                            <td class="status">
+                                @if ($bill->status==0)
+                                <span class="badge bg-danger-subtle text-danger text-uppercase">{{ $bill->status }}</span>
+                                @elseif($bill->status==1)
+                                <span class="badge bg-info-subtle text-info text-uppercase">{{ $bill->status }}</span>
+                                @elseif($bill->status==2)
+                                <span class="badge bg-primary-subtle text-primary text-uppercase">{{ $bill->status }}</span>
+                                @else
+                                <span
+                                class="badge bg-success-subtle text-success text-uppercase">{{ $bill->status }}</span>
+                                @endif
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             @endforeach
-            @else
-            <small class="text-center text-danger">Xin lỗi chúng tôi không tìm thấy đơn hàng của bạn, vui lòng kiểm tra lại mã đơn hàng</small>
+            @endif
+            @if (($Message))
+            <p class="text-center">Mã <span class="text-danger">{{$Message}}</span> không tồn tại, vui lòng kiểm tra lại mã đơn hàng</p>
             @endif
             <!-- /row -->
         </div>

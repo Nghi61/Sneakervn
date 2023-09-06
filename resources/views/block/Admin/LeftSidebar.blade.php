@@ -63,8 +63,18 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
+                    <a class="nav-link menu-link" href="/admin/comments">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Bình luận</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/admin/contract">
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Phản hồi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/admin/bill">
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Hóa đơn</span>
                     </a>
                 </li>
             </ul>

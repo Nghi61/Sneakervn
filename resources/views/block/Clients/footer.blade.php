@@ -1,3 +1,9 @@
+@php
+$Categories = DB::table('Categories')
+    ->whereNotIn('name', ['nam', 'nữ', 'không xác định'])
+    ->limit(6)
+    ->get();
+@endphp
 <footer class="revealed">
     <div class="container">
         <div class="row">
@@ -5,12 +11,12 @@
                 <h3 data-bs-target="#collapse_1">Liên kết</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_1">
                     <ul>
-                        <li><a href="about.html">Giới thiệu</a></li>
-                        <li><a href="help.html">Chính sách</a></li>
-                        <li><a href="help.html">Giúp đỡ</a></li>
-                        <li><a href="account.html">Tài khoản</a></li>
+                        <li><a href="{{ route('about') }}">Giới thiệu</a></li>
+                        <li><a href="{{ route('help') }}">Chính sách</a></li>
+                        <li><a href="{{ route('help') }}">Giúp đỡ</a></li>
+                        <li><a href="{{ route('account') }}">Tài khoản</a></li>
                         <li><a href="blog.html">Bài viết</a></li>
-                        <li><a href="contacts.html">Liên hệ</a></li>
+                        <li><a href="{{ route('contract') }}">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,12 +24,9 @@
                 <h3 data-bs-target="#collapse_2">Danh mục</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_2">
                     <ul>
-                        <li><a href="listing-grid-1-full.html">Clothes</a></li>
-                        <li><a href="listing-grid-2-full.html">Electronics</a></li>
-                        <li><a href="listing-grid-1-full.html">Furniture</a></li>
-                        <li><a href="listing-grid-3.html">Glasses</a></li>
-                        <li><a href="listing-grid-1-full.html">Shoes</a></li>
-                        <li><a href="listing-grid-1-full.html">Watches</a></li>
+                        @foreach ($Categories as $cate)
+                        <li><a href="{{ route('categories', ['idc'=>'nam','id'=>$cate->name]) }}">{{ $cate->name}}</a></li>
+                    @endforeach
                     </ul>
                 </div>
             </div>
@@ -32,8 +35,8 @@
                 <div class="collapse dont-collapse-sm contacts" id="collapse_3">
                     <ul>
                         <li><i class="ti-home"></i>Công Viên Phần Mềm Quang Trung FPT Polytechnic</li>
-                        <li><i class="ti-headphone-alt"></i>+(84) 353681506</li>
-                        <li><i class="ti-email"></i><a href="#0">nghinvps23655@fpt.edu.vn</a></li>
+                        <li><i class="ti-headphone-alt"></i>0353681506</li>
+                        <li><i class="ti-email"></i><a href="mailto:nghinvps23655@fpt.edu.vn">nghinvps23655@fpt.edu.vn</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,8 +54,8 @@
                         <ul>
                             <ul>
                                 <li><a href="#0"><i class="fa-brands fa-twitter" style="color: blue"></i></a></li>
-                                <li><a href="#0"><i class="fa-brands fa-facebook" style="color: #3b5998"></i></a></li>
-                                <li><a href="#0"><i class="fa-brands fa-instagram" style="color:  #e4405f;"></i></a></li>
+                                <li><a href="https://www.facebook.com/Nghi.1110.2003/"><i class="fa-brands fa-facebook" style="color: #3b5998"></i></a></li>
+                                <li><a href="https://www.instagram.com/nghi7787/"><i class="fa-brands fa-instagram" style="color:  #e4405f;"></i></a></li>
                                 <li><a href="#0"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i></a></li>
                             </ul>
                         </ul>
@@ -86,8 +89,8 @@
             </div>
             <div class="col-lg-6">
                 <ul class="additional_links">
-                    <li><a href="#0">Điều khoản và điều kiện</a></li>
-                    <li><a href="#0">Chính sách</a></li>
+                    <li><a href="{{ route('help') }}">Điều khoản và điều kiện</a></li>
+                    <li><a href="{{ route('help') }}">Chính sách</a></li>
                     <li><span>© 2023 VnSneaker</span></li>
                 </ul>
             </div>

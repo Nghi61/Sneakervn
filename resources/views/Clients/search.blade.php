@@ -1,6 +1,6 @@
 @extends('layouts.Clients')
 @section('css')
-    <link href="css/listing.css" rel="stylesheet">
+    <link href="{{ asset('css/listing.css') }}" rel="stylesheet">
 @endsection
 @section('noidung')
     <main>

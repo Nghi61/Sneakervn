@@ -31,6 +31,18 @@ class LoginRequest extends FormRequest
             'password' => ['required', 'string'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email là trường bắt buộc.',
+            'email.string' => 'Email phải là chuỗi.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Mật khẩu là trường bắt buộc.',
+            'password.string' => 'Mật khẩu phải là chuỗi.',
+
+        ];
+    }
+
 
     /**
      * Attempt to authenticate the request's credentials.

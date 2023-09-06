@@ -1,9 +1,8 @@
 <header class="version_1">
     @php
-$Categories = DB::table('Categories')
-                ->whereNotIn('name', ['nam', 'nữ','không xác định'])
-                ->get();
-                use App\Helpers\RoleHelper;
+        $Categories = DB::table('Categories')
+            ->whereNotIn('name', ['nam', 'nữ', 'không xác định'])
+            ->get();
 
     @endphp
     <div class="layer"></div><!-- Mobile menu overlay mask -->
@@ -35,7 +34,7 @@ $Categories = DB::table('Categories')
                                 <a href="#0" class="show-submenu">Nam</a>
                                 <ul>
                                     @foreach ($Categories as $cate)
-                                        <li><a href="">{{ $cate->name }}</a></li>
+                                        <li><a href="{{ route('categories', ['idc'=>'nam','id'=>$cate->name]) }}">{{ $cate->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
@@ -43,23 +42,23 @@ $Categories = DB::table('Categories')
                                 <a href="#0" class="show-submenu">nữ</a>
                                 <ul>
                                     @foreach ($Categories as $cate)
-                                        <li><a href="">{{ $cate->name }}</a></li>
+                                        <li><a href="{{ route('categories', ['idc'=>'nữ','id'=>$cate->name]) }}">{{ $cate->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
                             <li class="submenu">
-                                <a href="#0" class="show-submenu">trẻ em</a>
+                                <a href="#0" class="show-submenu">khác</a>
                                 <ul>
-                                    @foreach ($Categories as $cate)
-                                        <li><a href="">{{ $cate->name }}</a></li>
-                                    @endforeach
+                                    <li><a href="{{ route('about') }}">Giới thiệu</a></li>
+                                    <li><a href="{{ route('contract') }}">Liên hệ</a></li>
+                                    <li><a href="{{ route('help') }}">Giúp đỡ</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#0" class="show-submenu">Bài viết</a>
                             </li>
                             <li>
-                                <a href="#0" class="show-submenu">giảm giá</a>
+                                <a href="{{ route('sale') }}" class="show-submenu">giảm giá</a>
                             </li>
                         </ul>
                     </div>
@@ -96,22 +95,22 @@ $Categories = DB::table('Categories')
                                         <li><span><a href="#">Nam</a></span>
                                             <ul>
                                                 @foreach ($Categories as $cate)
-                                                    <li><a href="">{{ $cate->name }}</a></li>
-                                                @endforeach
+                                                <li><a href="{{ route('categories', ['idc'=>'nam','id'=>$cate->name]) }}">{{ $cate->name}}</a></li>
+                                            @endforeach
                                             </ul>
                                         </li>
                                         <li><span><a href="#">Nữ</a></span>
                                             <ul>
                                                 @foreach ($Categories as $cate)
-                                                    <li><a href="">{{ $cate->name }}</a></li>
-                                                @endforeach
+                                                <li><a href="{{ route('categories', ['idc'=>'nữ','id'=>$cate->name]) }}">{{ $cate->name}}</a></li>
+                                            @endforeach
                                             </ul>
                                         </li>
-                                        <li><span><a href="#">Trẻ Em</a></span>
+                                        <li><span><a href="#">Khác</a></span>
                                             <ul>
-                                                @foreach ($Categories as $cate)
-                                                    <li><a href="">{{ $cate->name }}</a></li>
-                                                @endforeach
+                                                <li><a href="{{ route('about') }}">Giới thiệu</a></li>
+                                                <li><a href="{{ route('contract') }}">Liên hệ</a></li>
+                                                <li><a href="{{ route('help') }}">Giúp đỡ</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -133,27 +132,42 @@ $Categories = DB::table('Categories')
                     <ul class="top_tools">
                         <li>
                             <div class="dropdown dropdown-cart">
-                                <a href="{{ route('cart')}}" class="cart_bt">@if(session('cart'))<strong></strong>@endif</a>
+                                <a href="{{ route('cart') }}" class="cart_bt">
+                                    @if (session('cart'))
+                                        <strong></strong>
+                                    @endif
+                                </a>
                                 <div class="dropdown-menu">
+                                    @php
+                                        $totalAmount = 0;
+                                    @endphp
                                     @if (session('cart') && !is_null(session('cart')))
-                                    @foreach (session('cart') as $row)
-                                    <ul>
-                                        <li>
-                                            <a href="/product/detail/{{$row['idProduct']}}">
-                                                <figure><img src="img/products/product_placeholder_square_small.jpg"
-                                                        data-src="{{ asset($row['urlHinh']) }}" alt=""
-                                                        width="50" height="50" class="lazy"></figure>
-                                                <strong><span>{{$row['name']}}</span>{{ number_format($row['price'], 0, ',', '.') }}</strong>
-                                            </a>
-                                            <a href="/cart/delete/{{$row['idProduct']}}" class="action"><i class="ti-trash"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="total_drop">
-                                        <div class="clearfix"><strong>Tổng:</strong><span>$200.00</span></div>
-                                    @endforeach
-                                        <a href="" class="btn_1 outline">Chi tiết</a><a href="checkout.html"
-                                            class="btn_1">Thanh toán</a>
-                                    </div>
+                                        @foreach (session('cart') as $row)
+                                            @php
+                                                $itemTotal = $row['price'] * $row['quantity'];
+                                                $totalAmount += $itemTotal;
+                                            @endphp
+                                            <ul>
+                                                <li>
+                                                    <a href="/product/detail/{{ $row['idProduct'] }}">
+                                                        <figure><img
+                                                                src="img/products/product_placeholder_square_small.jpg"
+                                                                data-src="{{ asset($row['urlHinh']) }}" alt=""
+                                                                width="50" height="50" class="lazy"></figure>
+                                                        <strong><span>{{ $row['name'] }}</span>{{ number_format($row['price'], 0, ',', '.') }}đ</strong>
+                                                    </a>
+                                                    <a href="/cart/delete/{{ $row['idProduct'] }}" class="action"><i
+                                                            class="ti-trash"></i></a>
+                                                </li>
+                                            </ul>
+                                        @endforeach
+                                        <div class="total_drop">
+                                            <div class="clearfix">
+                                                <strong>Tổng:</strong><span>{{ number_format($totalAmount, 0, ',', '.') }}đ</span>
+                                            </div>
+                                            <a href="" class="btn_1 outline">Chi tiết</a><a
+                                                href="{{ route('checkout.view') }}" class="btn_1">Thanh toán</a>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -168,12 +182,14 @@ $Categories = DB::table('Categories')
                                     <img src="{{ asset('img/avatar/default.jpg') }}" class="avatar" alt="Avatar">
                                     <div class="dropdown-menu">
                                         <div class="ms-3">Xin chào, <i
-                                                class="text-info">{{ Auth::user()->name }}</i></div>
+                                                class="text-info">{{ Auth::user()->name }}</i>
+                                        </div>
                                         <ul>
-                                            @if(Auth::user()->role==0)
-                                            <li>
-                                                <a href="{{ route('admin') }}"><i class="ti-window"></i>Quản lý Website</a>
-                                            </li>
+                                            @if (Auth::user()->role == 0)
+                                                <li>
+                                                    <a href="{{ route('admin') }}"><i class="ti-window"></i>Quản lý
+                                                        Website</a>
+                                                </li>
                                             @endif
                                             <li>
                                                 <a href="{{ route('trackOrder') }}"><i class="ti-truck"></i>Theo dõi
@@ -187,7 +203,8 @@ $Categories = DB::table('Categories')
                                                 <a href="/profile"><i class="ti-user"></i>Hồ sơ cá nhân</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('help') }}"><i class="ti-help-alt"></i>Giúp đỡ</a>
+                                                <a href="{{ route('help') }}"><i class="ti-help-alt"></i>Giúp
+                                                    đỡ</a>
                                             </li>
                                             <li>
                                                 <form action="{{ route('logout') }}" method="post"

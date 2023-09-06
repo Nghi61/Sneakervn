@@ -178,7 +178,7 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-
+                                <input type="hidden" name="totalAmout" value="{{$totalAmount}}">
 
                                 <button type="submit" class="btn_1 full-width">Xác nhận thanh toán</button>
                             </div>

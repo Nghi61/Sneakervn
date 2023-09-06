@@ -11,7 +11,7 @@
                         @csrf
                         <div class="search_bar">
                             <input type="text" name="MHD" class="form-control" placeholder="Mã đơn hàng">
-                            <input type="submit" value="Search">
+                            <input type="submit" value="Tìm kiếm">
                         </div>
                     </form>
 
