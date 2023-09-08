@@ -1,4 +1,7 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Kết quả tìm kiếm
+@endsection
 @section('css')
     <link href="{{ asset('css/listing.css') }}" rel="stylesheet">
 @endsection
@@ -109,7 +112,7 @@
                                             @else
                                                 <span class="ribbon new">New</span>
                                             @endif
-                                            <a href="/product/detail/{{$row->id}}">
+                                            <a href="/product/detail/{{$row->slug}}">
                                                 <img class="img-fluid lazy"
                                                     src="img/products/product_placeholder_square_medium.jpg"
                                                     data-src="{{ asset($row->urlHinh) }}" alt="">
@@ -117,7 +120,7 @@
                                         </figure>
                                 </div>
                                 <div class="col-sm-8">
-                                    <a href="/product/detail/{{$row->id}}">
+                                    <a href="/product/detail/{{$row->slug}}">
                                         <h3>{{ $row->name }}</h3>
                                     </a>
                                     @if (is_null($row->description))
@@ -144,8 +147,8 @@
                                     </ul>
                                     </form>
                                 </div>
-
                             </div>
+                            <div class="text-center">{{ $product->onEachSide(10)->links()}}</div>
                         @endforeach
                     @endif
                 </div>
@@ -155,55 +158,6 @@
         </div>
         <!-- /container -->
     </main>
-    <script>
-        const checkboxes = document.querySelectorAll('.category-checkbox');
-        let selectedCount = 0;
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    if (selectedCount < 2) {
-                        selectedCount++;
-                    } else {
-                        this.checked = false;
-                    }
-                } else {
-                    selectedCount--;
-                }
-            });
-        });
-        const checkboxes1 = document.querySelectorAll('.size-checkbox');
-        let selectedCount1 = 0;
-
-        checkboxes1.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    if (selectedCount1 < 1) {
-                        selectedCount1++;
-                    } else {
-                        this.checked = false;
-                    }
-                } else {
-                    selectedCount1--;
-                }
-            });
-        });
-        const checkboxes2 = document.querySelectorAll('.price-checkbox');
-        let selectedCount2 = 0;
-
-        checkboxes2.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    if (selectedCount2 < 1) {
-                        selectedCount2++;
-                    } else {
-                        this.checked = false;
-                    }
-                } else {
-                    selectedCount2--;
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('js/product.js') }}"></script>
 
 @endsection

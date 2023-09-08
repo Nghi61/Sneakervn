@@ -11,7 +11,7 @@
             <div class="row small-gutters">
                 <div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
                     <div id="logo">
-                        <a href="/"><img src="img/logo.svg" alt="" width="100" height="35"></a>
+                        <a href="/"><img src="{{ asset('img/logo.svg') }}" alt="" width="100" height="35"></a>
                     </div>
                 </div>
                 <nav class="col-xl-6 col-lg-7">
@@ -25,7 +25,7 @@
                     <!-- Mobile menu button -->
                     <div class="main-menu">
                         <div id="header_menu">
-                            <a href="index.html"><img src="img/logo_black.svg" alt="" width="100"
+                            <a href="{{ asset('img/logo.svg') }}"><img src="{{ asset('img/logo_black.svg') }}" alt="" width="100"
                                     height="35"></a>
                             <a href="#" class="open_close" id="close_in"><i class="ti-close"></i></a>
                         </div>
@@ -55,7 +55,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#0" class="show-submenu">Bài viết</a>
+                                <a href="{{ route('blog.all')}}" class="show-submenu">Bài viết</a>
                             </li>
                             <li>
                                 <a href="{{ route('sale') }}" class="show-submenu">giảm giá</a>

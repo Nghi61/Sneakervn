@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommentsController;
@@ -10,9 +11,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\CheckUserRole;
-use GuzzleHttp\Client;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +29,7 @@ Route::get('/admin/login',[AdminController::class,'login'])->name('admin.login')
 Route::post('/admin/login',[AdminController::class,'handle']);
 
 Route::get('/admin/404', function () {
-    return view('Admin.404');
+    return view('admin.404');
 });
 
 Route::middleware('admin')->group(function(){
@@ -48,39 +46,57 @@ Route::middleware('admin')->group(function(){
 
     Route::resource('/admin/contract', ContractController::class);
 
+    Route::resource('/admin/blog', BlogController::class);
+
     Route::resource('/admin/bill', BillController::class);
 
     Route::get('admin/bill/{id}/cart',[BillController::class,'cart']);
+
+    Route::post('admin/logout',[AdminController::class,'logout'])->name('admin.logout');
 }
 );
 
 Route::get('/accounts', function () {
-    return view('Clients.accounts');
+    return view('clients.accounts');
 })->name('account');
 
-Route::get('/trackOrder', function () {
-    $bill=[];
-    return view('Clients.trackOrder',['bill'=>$bill]);
-})->name('trackOrder');
-
-Route::post('/trackOrder',[ClientsController::class,'trackOrder'])->name('trackOrderResault');
 
 Route::get('/about', function () {
-    return view('Clients.about');
+    return view('clients.about');
 })->name('about');
 
 Route::get('/contract', function () {
-    return view('Clients.contract');
+    return view('clients.contract');
 })->name('contract');
 
 Route::post('/contract', [ClientsController::class,'Contract'])->name('contract');
 
 Route::get('/help', function () {
-    return view('Clients.help');
+    return view('clients.help');
 })->name('help');
 
+route::post('/search', [ClientsController::class, 'search'])->name('search');
+route::get('/search', [ClientsController::class, 'search']);
+
+route::get('/sale', [ClientsController::class, 'sale'])->name('sale');
+
+Route::get('/trackOrder', function () {
+    $bill=[];
+    return view('clients.trackOrder',['bill'=>$bill]);
+})->name('trackOrder');
+
+Route::post('/trackOrder',[ClientsController::class,'trackOrder'])->name('trackOrderResault');
+
+Route::get('/product/detail/{slug}', [ClientsController::class, 'ProductDetail'])->name('product.detail');
+
+route::get('/categories/{idc}/{id}', [ClientsController::class, 'categories'])->name('categories');
+
+Route::get('/blog/{slug}',[ClientsController::class,'blog'])->name('blog');
+
+Route::get('/blog',[ClientsController::class,'blogAll'])->name('blog.all');
+
 Route::get('/cart', function () {
-    return view('Clients.cart');
+    return view('clients.cart');
 });
 Route::post('/cart', [ClientsController::class, 'cart'])->name('cart');
 
@@ -90,22 +106,14 @@ Route::post('/checkout', [ClientsController::class, 'checkout'])->name('checkout
 
 Route::get('/checkout/view', [ClientsController::class, 'checkoutview'])->name('checkout.view');
 
-route::post('/search', [ClientsController::class, 'search'])->name('search');
-route::get('/search', [ClientsController::class, 'search']);
-
-route::get('/categories/{idc}/{id}', [ClientsController::class, 'categories'])->name('categories');
-
-route::get('/sale', [ClientsController::class, 'sale'])->name('sale');
-
 Route::post('/confirm', [ClientsController::class,'confirm'])->name('confirm');
-
-Route::get('/product/detail/{id}', [ClientsController::class, 'ProductDetail'])->name('product.detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/comment', [ClientsController::class, 'comment'])->name('comment');
+    Route::post('/comment/product', [ClientsController::class, 'CommentProduct'])->name('comment.product');
+    Route::post('/comment/blog', [ClientsController::class, 'CommentBlog'])->name('comment.blog');
 });
 
 require __DIR__ . '/auth.php';

@@ -1,4 +1,10 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Giới thiệu
+@endsection
+@section('css')
+<link href="{{ asset('css/about.css') }}" rel="stylesheet">
+@endsection
 @section('noidung')
 <main class="bg_gray">
     <div class="container margin_60_35 add_bottom_30">
@@ -107,7 +113,4 @@
     <!-- /bg_white -->
 <!-- /container -->
 </main>
-@endsection
-@section('css')
-<link href="css/about.css" rel="stylesheet">
 @endsection

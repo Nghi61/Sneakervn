@@ -1,4 +1,7 @@
 @extends('layouts.Clients')
+@section('title')
+VnSneaker - Trang chủ
+@endsection
 @section('noidung')
     <main>
         <div id="carousel-home">
@@ -122,13 +125,13 @@
                                     <span class="ribbon new">New</span>
                                 @endif
                                 <figure>
-                                    <a href="{{ route('product.detail', ['id' => $hot->id]) }}">
+                                    <a href="{{ route('product.detail', ['slug' => $hot->slug]) }}">
                                         <img class="img-fluid lazy"
                                             src="{{ asset('img/products/product_placeholder_square_medium.jpg') }}"
                                             data-src="{{ $hot->urlHinh }}" alt="" width="400" height="400">
                                     </a>
                                 </figure>
-                                <a href="{{ route('product.detail', ['id' => $hot->id]) }}">
+                                <a href="{{ route('product.detail', ['slug' => $hot->slug]) }}">
                                     <h3>{{ $hot->name }}</h3>
                                 </a>
                                 <div class="price_box">
@@ -201,14 +204,14 @@
                                 @endif
 
                                 <figure>
-                                    <a href="product/detail/{{ $new->id }}">
+                                    <a href="product/detail/{{ $new->slug }}">
                                         <img class="owl-lazy img-fluid"
                                             src="img/products/product_placeholder_square_medium.jpg"
                                             data-src="{{ $new->urlHinh }}" alt="" width="400"
                                             height="400">
                                         </button>
                                 </figure>
-                                <a href="product/detail/{{ $new->id }}">
+                                <a href="product/detail/{{ $new->slug }}">
                                     <h3>{{ $new->name }}</h3>
                                 </a>
                                 <div class="price_box">
@@ -245,74 +248,23 @@
                 <p>Những bài viết mới được cập nhật</p>
             </div>
             <div class="row">
+                @foreach ($blogs as $row)
                 <div class="col-lg-6">
-                    <a class="box_news" href="blog.html">
+                    <a class="box_news" href="{{ route('blog', ['slug'=>$row->slug]) }}">
                         <figure>
-                            <img src="img/blog-thumb-placeholder.jpg" data-src="img/blog-thumb-1.jpg" alt=""
+                            <img src="img/blog-thumb-placeholder.jpg" data-src="{{$row->urlHinh}}" alt=""
                                 width="400" height="266" class="lazy">
-                            <figcaption><strong>28</strong>Dec</figcaption>
+                            <figcaption><strong>{{ $row->created_at->format('m') }}</strong>{{ $row->created_at->format('Y') }}</figcaption>
                         </figure>
                         <ul>
-                            <li>by Mark Twain</li>
-                            <li>20.11.2017</li>
+                            <li>Đăng bởi: {{$row->idUser}}</li>
+                            <li>{{ $row->created_at->format('d/m/y')}}</li>
                         </ul>
-                        <h4>Pri oportere scribentur eu</h4>
-                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
-                            ullum vidisse....</p>
+                        <h4>{{$row->title}}</h4>
+                        <p>{{$row->content}}</p>
                     </a>
                 </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="blog.html">
-                        <figure>
-                            <img src="img/blog-thumb-placeholder.jpg" data-src="img/blog-thumb-2.jpg" alt=""
-                                width="400" height="266" class="lazy">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>By Jhon Doe</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>Duo eius postea suscipit ad</h4>
-                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
-                            ullum vidisse....</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="blog.html">
-                        <figure>
-                            <img src="img/blog-thumb-placeholder.jpg" data-src="img/blog-thumb-3.jpg" alt=""
-                                width="400" height="266" class="lazy">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>By Luca Robinson</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>Elitr mandamus cu has</h4>
-                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
-                            ullum vidisse....</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="blog.html">
-                        <figure>
-                            <img src="img/blog-thumb-placeholder.jpg" data-src="img/blog-thumb-4.jpg" alt=""
-                                width="400" height="266" class="lazy">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>By Paula Rodrigez</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>Id est adhuc ignota delenit</h4>
-                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
-                            ullum vidisse....</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
+                @endforeach
             </div>
             <!-- /row -->
         </div>

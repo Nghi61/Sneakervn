@@ -2,62 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\BillModel;
 use App\Models\CartModel;
 use App\Models\ContractModel;
-use App\Models\ProductCategories;
-use App\Models\Products;
-use App\Models\ProductGallery;
-use App\Models\Sizes;
-use App\Models\Categories;
+use App\Models\CategoriesModel;
+use App\Models\CommentsProductModel;
+use App\Models\CommentBlogModel;
+use App\Models\ProductModel;
+use App\Models\ProductCategoriesModel;
+use App\Models\ProductGalleryModel;
+use App\Models\SizeModel;
 use App\Mail\MailBill;
-use App\Models\CommentsModel;
-use App\Models\User;
-use GuzzleHttp\Psr7\Message;
+use App\Models\BlogModel;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+Paginator::useBootstrap();
 
 class ClientsController extends Controller
 {
     function index()
     {
-        $NewProduct = Products::orderBy('id', 'desc')->limit(4)->get();
+        $NewProduct = ProductModel::orderBy('id', 'desc')->limit(10)->get();
 
-        $HotProduct = Products::orderBy('view', 'desc')->limit(4)->get();
+        $HotProduct = ProductModel::orderBy('view', 'desc')->limit(10)->get();
 
-        return view('Clients.home', ['NewProduct' => $NewProduct, 'HotProduct' => $HotProduct,]);
+        $blogs = BlogModel::orderBy('id', 'desc')->limit(4)->get();
+
+        $user = UserModel::all();
+
+        foreach ($user as $row) {
+            foreach ($blogs as $blog) {
+                if ($blog->idUser == $row->id) {
+                    $blog->idUser = $row->name;
+                }
+            }
+        }
+
+        return view('clients.home', ['NewProduct' => $NewProduct, 'HotProduct' => $HotProduct, 'blogs' => $blogs]);
     }
-    function ProductDetail($id)
+    function ProductDetail($slug)
     {
-        $Pro = Products::find($id);
+        $Pro = ProductModel::where('slug',$slug)->first();
         $view = $Pro->view;
         $view++;
         $Pro->view = $view;
         $Pro->save();
         $related = [];
         if (is_null($Pro)) {
-            return view('Clients.404');
+            return view('clients.404');
         }
-        $Pro->img = ProductGallery::where('idProduct', $id)->get();
-        $size = Sizes::where('idProduct', $id)->get();
-        $Comment = CommentsModel::where('idProduct', '=', $id)->get();
+        $Pro->img = ProductGalleryModel::where('idProduct', $Pro->id)->get();
+        $size = SizeModel::where('idProduct', $Pro->id)->get();
+        $Comment = CommentsProductModel::where('idProduct', '=', $Pro->id)->paginate(10);
         foreach ($Comment as $row) {
-            $row->name = User::select('name')->where('id', $row->idUser)->get();
+            $row->name = UserModel::select('name')->where('id', $row->idUser)->get();
         }
-        $idCate = ProductCategories::where('idProduct', $id)->get();
+        $idCate = ProductCategoriesModel::where('idProduct', $Pro->id)->get();
         foreach ($idCate as $row) {
-            $idPro = ProductCategories::where('idCategories', $row->idCategories)->get();
+            $idPro = ProductCategoriesModel::where('idCategories', $row->idCategories)->get();
         }
         foreach ($idPro as $row) {
-            if ($row->idProduct != $id) {
-                $related = Products::where('id', $row->idProduct)->get();
+            if ($row->idProduct != $Pro->id) {
+                $related = ProductModel::where('id', $row->idProduct)->get();
             }
         }
         $check = count($Comment);
-        return view('Clients.productDetail', ['Pro' => $Pro, 'size' => $size, 'comment' => $Comment, 'check' => $check, 'related' => $related]);
+        return view('clients.productDetail', ['Pro' => $Pro, 'size' => $size, 'comment' => $Comment, 'check' => $check, 'related' => $related]);
     }
-    function comment(Request $request)
+    function CommentProduct(Request $request)
     {
         if ($request->isMethod('POST')) {
             // Nhận dữ liệu bình luận từ yêu cầu Ajax
@@ -65,7 +81,7 @@ class ClientsController extends Controller
             $comment = $request->input("comment");
             $idPro = $request->input("idPro");
             // Lưu thông tin bình luận vào cơ sở dữ liệu
-            CommentsModel::create([
+            CommentsProductModel::create([
                 'idUser' => $idUser,
                 'idProduct' => $idPro,
                 'content' => $comment,
@@ -81,14 +97,14 @@ class ClientsController extends Controller
     function cart(Request $request)
     {
         $id = $request->id;
-        $pro = Products::find($id);
+        $pro = ProductModel::find($id);
 
         if (is_null($pro)) {
-            return view('Clients.404');
+            return view('clients.404');
         }
 
         $idsize = $request->size;
-        $size = Sizes::where('id', $idsize)->first();
+        $size = SizeModel::where('id', $idsize)->first();
         $quantity = $request->quantity;
 
         if ($pro->sale <= 0 || is_null($pro->sale)) {
@@ -122,7 +138,7 @@ class ClientsController extends Controller
 
         session(['cart' => $cart]);
 
-        return view('Clients.cart');
+        return view('clients.cart');
     }
     function cartDelete($id)
     {
@@ -161,24 +177,24 @@ class ClientsController extends Controller
     }
     function checkoutview()
     {
-        return view('Clients.checkout');
+        return view('clients.checkout');
     }
     function search(Request $request)
     {
         $kw = $request->keyword;
-        $product = Products::where('name', 'LIKE', '%' . $kw . '%')->get();
-        $cate = Categories::whereNotIn('name', ['không xác định'])->get();
-        $sizes = Sizes::select('size')->groupBy('size')->get();
+        $product = ProductModel::where('name', 'LIKE', '%' . $kw . '%')->paginate(10);
+        $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
+        $sizes = SizeModel::select('size')->groupBy('size')->get();
         foreach ($cate as $row) {
-            $quantity = ProductCategories::where('idCategories', $row->id)->count();
+            $quantity = ProductCategoriesModel::where('idCategories', $row->id)->count();
             $row->quantity = $quantity;
         }
-        return view('Clients.search', ['product' => $product, 'Categories' => $cate, 'sizes' => $sizes, 'kw' => $kw]);
+        return view('clients.search', ['product' => $product, 'Categories' => $cate, 'sizes' => $sizes, 'kw' => $kw]);
     }
     function categories(string $idc, $id)
     {
         // Retrieve 'id' values from the 'Categories' table where 'name' matches $id or $idc
-        $idCategories = Categories::select('id')
+        $idCategories = CategoriesModel::select('id')
             ->whereIn('name', [$id, $idc])
             ->get();
 
@@ -191,7 +207,7 @@ class ClientsController extends Controller
         }
 
         // Use the extracted 'id' values to query the 'ProductCategories' table
-        $idProduct = ProductCategories::select('id')
+        $idProduct = ProductCategoriesModel::select('id')
             ->whereIn('idCategories', $categoryIds)
             ->get();
 
@@ -204,23 +220,24 @@ class ClientsController extends Controller
         }
 
         // Use the extracted 'id' values to query the 'Products' table
-        $product = Products::whereIn('id', $productIds)->get();
+        $product = ProductModel::whereIn('id', $productIds)->paginate(10);
 
-        $cate = Categories::whereNotIn('name', ['không xác định'])->get();
-        $sizes = Sizes::select('size')->groupBy('size')->get();
+        $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
+        $sizes = SizeModel::select('size')->groupBy('size')->get();
         foreach ($cate as $row) {
-            $quantity = ProductCategories::where('idCategories', $row->id)->count();
+            $quantity = ProductCategoriesModel::where('idCategories', $row->id)->count();
             $row->quantity = $quantity;
         }
-        return view('Clients.search', ['product' => $product, 'Categories' => $cate, 'sizes' => $sizes, 'kw' => $id]);
+        return view('clients.search', ['product' => $product, 'Categories' => $cate, 'sizes' => $sizes, 'kw' => $id]);
     }
-    function sale(){
+    function sale()
+    {
         $kw = "Giảm giá";
-        $product = Products::where('sale','>',0)->get();
-        $cate = Categories::whereNotIn('name', ['không xác định'])->get();
-        $sizes = Sizes::select('size')->groupBy('size')->get();
+        $product = ProductModel::where('sale', '>', 0)->paginate(10);
+        $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
+        $sizes = SizeModel::select('size')->groupBy('size')->get();
         foreach ($cate as $row) {
-            $quantity = ProductCategories::where('idCategories', $row->id)->count();
+            $quantity = ProductCategoriesModel::where('idCategories', $row->id)->count();
             $row->quantity = $quantity;
         }
         return view('Clients.search', ['product' => $product, 'Categories' => $cate, 'sizes' => $sizes, 'kw' => $kw]);
@@ -236,7 +253,7 @@ class ClientsController extends Controller
         $MHD = uniqid('MHD_', true);
         $totalAmount = $request->totalAmout;
         $cart = session('cart');
-        $bill=BillModel::create([
+        $bill = BillModel::create([
             'name' => $name,
             'MHD' => $MHD,
             'phone' => $phone,
@@ -247,22 +264,22 @@ class ClientsController extends Controller
             'total' => $totalAmount,
             'status' => (string)0
         ]);
-        $idBill=$bill->id;
+        $idBill = $bill->id;
         foreach ($cart as $index => $row) {
-        CartModel::create([
-            'ProductName' => $row['name'],
-            'Price' => $row['price'],
-            'size' => $row['size'],
-            'quantity' => $row['quantity'],
-            'urlHinh' => $row['urlHinh'],
-            'idBill' =>$idBill,
-        ]);
-    }
+            CartModel::create([
+                'ProductName' => $row['name'],
+                'Price' => $row['price'],
+                'size' => $row['size'],
+                'quantity' => $row['quantity'],
+                'urlHinh' => $row['urlHinh'],
+                'idBill' => $idBill,
+            ]);
+        }
         session::forget('cart');
 
         Mail::mailer('smtp')->to($email)
             ->send(new MailBill($name, $MHD));
-        return view('Clients.confirm');
+        return view('clients.confirm');
     }
     function trackOrder(Request $request)
     {
@@ -299,7 +316,7 @@ class ClientsController extends Controller
                 $bill->status = 'Giao hàng thành công';
             }
         }
-        return view('Clients.trackOrderResault', ['bills' => $bills, 'Message' => $Message]);
+        return view('clients.trackOrderResault', ['bills' => $bills, 'Message' => $Message]);
     }
     function contract(Request $request)
     {
@@ -313,4 +330,83 @@ class ClientsController extends Controller
         $contract->save();
         return back();
     }
+    function blog(string $slug)
+    {
+        $blog = BlogModel::where('slug', $slug)->first();
+        $view = $blog->view;
+        $view++;
+        $blog->view = $view;
+        $blog->save();
+        if (is_null($blog)) {
+            return view('clients.404');
+        }
+        $releted = BlogModel::whereNotIn('id', [$blog->id])
+        ->limit(5)
+        ->get();
+        $user = UserModel::all();
+
+        foreach ($user as $row) {
+            if ($blog->idUser == $row->id) {
+                $blog->idUser = $row->name;
+            }
+            foreach($releted as $re){
+                if($re->idUser==$row->id){
+                    $re->idUser=$row->name;
+                }
+            }
+
+        }
+        $quantity = CommentBlogModel::where('idBlog', $blog->id)->count();
+        $comment = CommentBlogModel::where('idBlog', $blog->id)->paginate(10);
+
+        foreach ($comment as $row) {
+            $row->name = UserModel::select('name')->where('id', $row->idUser)->get();
+        }
+        return view('clients.blogPost', ['blog' => $blog, 'quantity' => $quantity, 'comment' => $comment,'releted'=>$releted]);
+    }
+    function CommentBlog(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            // Nhận dữ liệu bình luận từ yêu cầu Ajax
+            $idUser = $request->input("idUser");
+            $comment = $request->input("comment");
+            $idBlog = $request->input("idBlog");
+            // Lưu thông tin bình luận vào cơ sở dữ liệu
+            CommentBlogModel::create([
+                'idUser' => $idUser,
+                'idBlog' => $idBlog,
+                'content' => $comment,
+            ]);
+
+            // Trả về kết quả thành công cho Ajax
+            echo "success";
+        } else {
+            // Trả về lỗi nếu yêu cầu không phải là POST
+            echo "error";
+        }
+    }
+    function blogAll(){
+        // Lấy danh sách các bài viết theo thứ tự giảm dần của ID và phân trang
+        $blogs = BlogModel::orderBy('id', 'desc')->paginate(10);
+
+        // Lấy danh sách các người dùng và chuyển thành một mảng liên kết theo ID
+        $users = UserModel::all()->keyBy('id');
+
+        // Tính toán số lượng bình luận cho mỗi bài viết
+        $commentCounts = CommentBlogModel::select('idBlog', DB::raw('COUNT(*) as count'))
+            ->groupBy('idBlog')
+            ->pluck('count', 'idBlog');
+
+        // Duyệt qua danh sách bài viết và thực hiện cập nhật thông tin người dùng và số lượng bình luận
+        foreach($blogs as $blog){
+            if(isset($users[$blog->idUser])){
+                $blog->userName = $users[$blog->idUser]->name;
+            }
+            $blog->commentCount = $commentCounts->get($blog->id, 0);
+        }
+
+        $releted = BlogModel::orderBy('id')->limit(4)->get();
+        return view('clients.blog', ['blogs' => $blogs,'releted'=>$releted]);
+    }
+
 }

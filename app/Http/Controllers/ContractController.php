@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContractModel;
 use Illuminate\Http\Request;
+use App\Models\ContractModel;
+use Illuminate\Pagination\Paginator;
+Paginator::useBootstrap();
 
 class ContractController extends Controller
 {
@@ -12,8 +14,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contract=ContractModel::all();
-        return view('Admin.Contract.index',['contract'=>$contract]);
+        $contract=ContractModel::where('id','desc')->paginate(10);
+        return view('admin.Contract.index',['contract'=>$contract]);
     }
 
 
@@ -21,7 +23,7 @@ class ContractController extends Controller
     {
         $contract= ContractModel::find($id);
         if(is_null($contract)){
-            return view('Admin.404');
+            return view('admin.404');
         }
         $contract->delete();
         return back();

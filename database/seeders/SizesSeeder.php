@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Sizes;
+use App\Models\SizeModel;
 
 class SizesSeeder extends Seeder
 {
@@ -13,145 +13,145 @@ class SizesSeeder extends Seeder
      */
     public function run(): void
     {
-        Sizes::create([
+        SizeModel::create([
             'size'=>'39',
             'quantity'=>'10',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'40',
             'quantity'=>'10',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'41',
             'quantity'=>'20',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'42',
             'quantity'=>'20',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'43',
             'quantity'=>'10',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'44',
             'quantity'=>'20',
             'idProduct'=>'1',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'45',
             'quantity'=>'10',
             'idProduct'=>'1',
         ]);
 
-        Sizes::create([
+        SizeModel::create([
             'size'=>'39',
             'quantity'=>'10',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'40',
             'quantity'=>'10',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'41',
             'quantity'=>'20',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'42',
             'quantity'=>'20',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'43',
             'quantity'=>'10',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'44',
             'quantity'=>'20',
             'idProduct'=>'2',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'45',
             'quantity'=>'10',
             'idProduct'=>'2',
         ]);
 
-        Sizes::create([
+        SizeModel::create([
             'size'=>'39',
             'quantity'=>'10',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'40',
             'quantity'=>'10',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'41',
             'quantity'=>'20',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'42',
             'quantity'=>'20',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'43',
             'quantity'=>'10',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'44',
             'quantity'=>'20',
             'idProduct'=>'3',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'45',
             'quantity'=>'10',
             'idProduct'=>'3',
         ]);
 
-        Sizes::create([
+        SizeModel::create([
             'size'=>'39',
             'quantity'=>'10',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'40',
             'quantity'=>'10',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'41',
             'quantity'=>'20',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'42',
             'quantity'=>'20',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'43',
             'quantity'=>'10',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'44',
             'quantity'=>'20',
             'idProduct'=>'4',
         ]);
-        Sizes::create([
+        SizeModel::create([
             'size'=>'45',
             'quantity'=>'10',
             'idProduct'=>'4',

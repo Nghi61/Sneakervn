@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>VnSneaker - Trang chủ</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title')</title>
 
     <!-- BASE CSS -->
     @yield('css')
@@ -37,7 +38,6 @@
     <!-- SPECIFIC SCRIPTS -->
     <script src="{{ asset('js/carousel-home.js') }}"></script>
     <script src="https://kit.fontawesome.com/d7f51baa37.js" crossorigin="anonymous"></script>
-
 </body>
 
 </html>

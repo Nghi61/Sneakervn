@@ -1,14 +1,18 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Tài Khoản
+@endsection
+@section('css')
+    <link href="css/account.css" rel="stylesheet">
+@endsection
 @section('noidung')
 <main class="bg_gray">
-
 	<div class="container margin_30">
 		<div class="page_header">
 			<div class="breadcrumbs">
 				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Category</a></li>
-					<li>Page active</li>
+					<li><a href="/">Trang chủ</a></li>
+					<li><a href="{{ route('account') }}">Tài khoản</a></li>
 				</ul>
 		</div>
 		<h1>Đăng nhập hoặc Đăng kí</h1>
@@ -146,6 +150,4 @@
 		<!-- /container -->
 	</main>
 @endsection
-@section('css')
-    <link href="css/account.css" rel="stylesheet">
-@endsection
+

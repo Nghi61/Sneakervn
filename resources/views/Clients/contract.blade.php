@@ -1,7 +1,12 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Liên hệ
+@endsection
+@section('css')
+<link href="{{ asset('css/contact.css') }}" rel="stylesheet">
+@endsection
 @section('noidung')
 <main class="bg_gray">
-
     <div class="container margin_60">
         <div class="main_title">
             <h2>Liên hệ</h2>
@@ -45,20 +50,20 @@
                 <div class="col-lg-4 col-md-6 add_bottom_25">
                     <div class="form-group">
                         @if (Auth::check())
-                        <input class="form-control" value="{{Auth::user()->name}}" type="text" name="name">
+                        <input class="form-control" required value="{{Auth::user()->name}}" type="text" name="name">
                         @else
-                        <input class="form-control" type="text" value="{{old('name')}}" placeholder="Họ tên*" name="name">
+                        <input class="form-control" required type="text" value="{{old('name')}}" placeholder="Họ tên*" name="name">
                         @endif
                     </div>
                     <div class="form-group">
                         @if (Auth::check())
-                        <input class="form-control" type="text" value="{{Auth::user()->email}}" name="email">
+                        <input class="form-control" required type="email" value="{{Auth::user()->email}}" name="email">
                         @else
-                        <input class="form-control" type="email" value="{{old('email')}}" placeholder="Email *" name="email">
+                        <input class="form-control" required type="email" value="{{old('email')}}" placeholder="Email *" name="email">
                         @endif
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" name="message" value="{{old('message')}}" style="height: 150px;" placeholder="Góp ý *"></textarea>
+                        <textarea class="form-control" required name="message" value="{{old('message')}}" style="height: 150px;" placeholder="Góp ý *"></textarea>
                     </div>
                     <div class="form-group">
                         <input class="btn_1 full-width" type="submit" value="Gửi">
@@ -76,6 +81,4 @@
 <!-- /bg_white -->
 </main>
 @endsection
-@section('css')
-<link href="css/contact.css" rel="stylesheet">
-@endsection
+

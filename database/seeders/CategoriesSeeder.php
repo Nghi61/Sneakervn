@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Categories;
+use App\Models\CategoriesModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,47 +12,47 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Không xác định',
             'slug'=>'khong-xac-dinh'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Original',
             'slug'=>'original'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Bóng đá',
             'slug'=>'bong-da'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Chạy',
             'slug'=>'Chạy'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Tập luyện',
             'slug'=>'tap-luyen'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Essentials',
             'slug'=>'essentials'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Ngoài trời',
             'slug'=>'ngoai-troi'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Bóng rổ',
             'slug'=>'bong-ro'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Tennis',
             'slug'=>'tennis'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Nam',
             'slug'=>'nam'
         ]);
-        Categories::create([
+        CategoriesModel::create([
             'name' => 'Nữ',
             'slug'=>'nu'
         ]);

@@ -1,4 +1,10 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Thanh toán
+@endsection
+@section('css')
+<link href="{{ asset('css/checkout.css') }}" rel="stylesheet">
+@endsection
 @section('noidung')
 <main class="bg_gray">
     <div class="container">
@@ -24,6 +30,4 @@
 
 </main>
 @endsection
-@section('css')
-<link href="css/checkout.css" rel="stylesheet">
-@endsection
+

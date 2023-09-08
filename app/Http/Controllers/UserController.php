@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RuleUser;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\UserModel;
+use Illuminate\Pagination\Paginator;
+Paginator::useBootstrap();
+
 class UserController extends Controller
 {
     /**
@@ -12,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user=User::all();
+        $user=UserModel::where('id','desc')->paginate(10);
         foreach($user as $row){
             if( $row->role==0){
                 $row->role='Quản lý';
@@ -22,7 +25,7 @@ class UserController extends Controller
             }
 
         }
-        return view('Admin.User.index',['user'=>$user]);
+        return view('admin.User.index',['user'=>$user]);
     }
 
     /**
@@ -30,13 +33,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('Admin.User.add');
+        return view('admin.User.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RuleUser $request)
+    public function store(UserRequest $request)
     {
         $name = $request->name;
         $emai = $request->email;
@@ -47,7 +50,7 @@ class UserController extends Controller
         $avatar = $request->file('avatar');
         $role = $request->role;
 
-        $user = new user;
+        $user = new UserModel;
         $user->name = $name;
         $user->email = $emai;
         $user->phone= $phone;
@@ -81,21 +84,21 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user=User::find($id);
+        $user=UserModel::find($id);
         if(is_null($user)){
-            return view('Admin.404');
+            return view('admin.404');
         }
-        return view('Admin.User.edit',['user'=>$user]);
+        return view('admin.User.edit',['user'=>$user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RuleUser $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
-        $user = user::find($id);
+        $user = UserModel::find($id);
         if(is_null($user)){
-            return view('Admin.404');
+            return view('admin.404');
         }
         $name=$request->name;
         $avatar=$request->file('avatar');
@@ -127,6 +130,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user= UserModel::find($id);
+        if(is_null($user)){
+            return view('admin.404');
+        }
+        $user->delete();
+        return back();
     }
 }

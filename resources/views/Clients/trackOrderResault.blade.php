@@ -1,4 +1,10 @@
 @extends('layouts.Clients')
+@section('title')
+VnSneaker - Kiểm tra đơn hàng
+@endsection
+@section('css')
+<link href="{{ asset('css/error_track.css') }}" rel="stylesheet">
+@endsection
 @section('noidung')
 <main class="bg_gray vh-100 ">
     <div id="track_order">
@@ -70,8 +76,4 @@
     <!-- /track_order -->
 
 </main>
-@endsection
-@section('css')
-<link href="css/error_track.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 @endsection

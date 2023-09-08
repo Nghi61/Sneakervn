@@ -1,14 +1,18 @@
-@extends('layouts.Clients')
+@extends('layouts.clients')
+@section('title')
+VnSneaker - Sản Phẩm
+@endsection
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/product_page.css') }}">
+@endsection
 @section('noidung')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <main class="bg_gray">
         <div class="container margin_30">
             <div class="page_header">
                 <div class="breadcrumbs">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Hello</a></li>
-                        <li>Page active</li>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li>{{$Pro->name}}</li>
                     </ul>
                 </div>
                 <h1>{{ $Pro->name }}</h1>
@@ -141,7 +145,6 @@
                     <textarea id="commentText" rows="4" cols="50" class="w-100"></textarea>
                     <input type="hidden" id="id" value="{{ Auth::user()->id }}">
                     <input type="hidden" id="name" value="{{ Auth::user()->name }}">
-                    <input type="hidden" id="email" value="{{ Auth::user()->email }}">
                     <input type="hidden" id="idPro" value="{{ $Pro->id }}">
                     <br>
                     <button id="submitComment" class="btn btn-warning mt-3">Gửi bình luận</button>
@@ -153,90 +156,6 @@
                 @endif
 
             </div>
-            <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-                integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-            <script>
-                $(document).ready(function() {
-                    function getCurrentDateTime() {
-                        var now = new Date();
-                        var year = now.getFullYear();
-                        var month = padZero(now.getMonth() + 1);
-                        var day = padZero(now.getDate());
-                        var hours = padZero(now.getHours());
-                        var minutes = padZero(now.getMinutes());
-                        var seconds = padZero(now.getSeconds());
-
-                        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-                    }
-
-                    // Hàm để thêm số 0 vào trước các số dưới 10
-                    function padZero(number) {
-                        return (number < 10 ? '0' : '') + number;
-                    }
-                    // Xử lý sự kiện khi nút "Gửi bình luận" được nhấn
-                    $("#submitComment").click(function() {
-                        // Lấy nội dung bình luận từ ô textarea
-                        var commentContent = $("#commentText").val();
-                        var idUser = $("#id").val();
-                        var name = $("#name").val();
-                        var idPro = $("#idPro").val();
-
-                        // Kiểm tra xem người dùng đã nhập nội dung bình luận hay chưa
-                        if (commentContent.trim() === "") {
-                            alert("Vui lòng nhập nội dung bình luận.");
-                            return;
-                        }
-
-                        // Gửi dữ liệu bình luận lên máy chủ bằng Ajax
-                        $.ajax({
-                            url: '{{ route('comment') }}',
-                            type: "POST",
-                            data: {
-                                comment: commentContent,
-                                idUser: idUser,
-                                idPro: idPro,
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-
-                            success: function(response) {
-                                // Xử lý kết quả trả về từ máy chủ
-                                if (response === "success") {
-                                    // Nếu bình luận được đăng thành công, thêm nó vào khu vực hiển thị bình luận
-                                    var newComment =
-                                        '<div class="comment">' +
-                                        '<div class="comment-info row">' +
-                                        '<div class="col">' +
-                                        '<span class="comment-author">Tác giả: ' + name + '</span>' +
-                                        '</div>' +
-                                        '<div class="col text-end">' +
-                                        '<span class="comment-date">' + getCurrentDateTime() +
-                                        '</span>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '<div class="comment-content">' + commentContent + '</div>' +
-                                        '</div>';
-
-                                    $("#commentList").append(newComment);
-
-                                    // Xóa nội dung trong ô textarea sau khi bình luận được đăng
-                                    $("#commentText").val("");
-                                    var currentCount = parseInt("{{ $check }}");
-                                    currentCount++;
-                                    // Hiển thị giá trị mới của biến $dem
-                                    $("#commentCount").text("Bình luận(" + currentCount + ")");
-                                } else {
-                                    alert("Đã xảy ra lỗi khi đăng bình luận. Vui lòng thử lại sau.");
-                                }
-                            },
-                            error: function() {
-                                alert("Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại sau.");
-                            }
-                        });
-                    });
-                });
-            </script>
         </div>
 
         <div class="bg_white">
@@ -255,7 +174,7 @@
                                 <span class="ribbon new">New</span>
                             @endif
                             <figure>
-                                <a href="{{ route('product.detail', ['id' => $hot->id]) }}">
+                                <a href="{{ route('product.detail', ['slug' => $hot->slug]) }}">
                                     <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg"
                                         data-src="{{ asset($hot->urlHinh) }}" alt="" width="400"
                                         height="400">
@@ -264,7 +183,7 @@
                             <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
                                     class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
                             </div>
-                            <a href="/product/detail/{{ $hot->id }}">
+                            <a href="/product/detail/{{ $hot->slug }}">
                                 <h3>{{ $hot->name }}</h3>
                             </a>
                             <div class="price_box">
@@ -290,6 +209,13 @@
 
     </main>
 @endsection
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/product_page.css') }}">
+@section('js')
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+var url = '{{ route('comment.product') }}';
+var check=  parseInt("{{ $check }}");
+</script>
+<script src="{{ asset('js/product-detail.js') }}"></script>
 @endsection
+

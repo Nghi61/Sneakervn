@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 use Carbon\Carbon;
-use App\Models\User;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        UserModel::create([
             'name' => 'Nguyễn Văn Nghi',
             'email' => 'nghinvps23655@fpt.edu.vn',
             'password' => Hash::make('123456789'),

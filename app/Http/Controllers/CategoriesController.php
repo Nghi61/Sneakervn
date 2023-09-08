@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Categories;
-use App\Models\ProductCategories;
-use App\Http\Requests\RuleCategories;
+use App\Http\Requests\CategoriesRequest;
+use App\Models\CategoriesModel;
+use App\Models\ProductCategoriesModel;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
+Paginator::useBootstrap();
 
 
 class CategoriesController extends Controller
@@ -16,12 +18,12 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $cate = Categories::all();
+        $cate = CategoriesModel::all();
         foreach ($cate as $row) {
-            $quantity = ProductCategories::where('idCategories', $row->id)->count();
+            $quantity = ProductCategoriesModel::where('idCategories', $row->id)->count();
             $row->quantity = $quantity;
         }
-        return view('Admin.Categories.index', ['cate' => $cate, 'show' => true]);
+        return view('admin.Categories.index', ['cate' => $cate, 'show' => true]);
     }
 
     /**
@@ -29,17 +31,17 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RuleCategories $request)
+    public function store(CategoriesRequest $request)
     {
         $name = $request->name;
         $slug = $request->slug;
-        $cate = new Categories;
+        $cate = new CategoriesModel;
         $cate->name = $name;
         if (is_null($slug)) {
             $cate->slug = Str::slug($name);
@@ -63,16 +65,16 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        $cate = Categories::all();
+        $cate = CategoriesModel::all();
         foreach ($cate as $row) {
-            $quantity = ProductCategories::where('idCategories', $row->id)->count();
+            $quantity = ProductCategoriesModel::where('idCategories', $row->id)->count();
             $row->quantity = $quantity;
         }
-        $ce = Categories::find($id);
+        $ce = CategoriesModel::find($id);
         if(is_null($ce)){
-            return redirect('admin/404');
+            return view('admin.404');
         }
-        return view('Admin.Categories.index', ['cate' => $cate, 'show' => false, 'ce' => $ce]);
+        return view('admin.Categories.index', ['cate' => $cate, 'show' => false, 'ce' => $ce]);
     }
 
     /**
@@ -80,21 +82,18 @@ class CategoriesController extends Controller
      */
 
 
-     public function update(RuleCategories $request, $id)
+     public function update(CategoriesRequest $request, $id)
      {
-         $category = Categories::findOrFail($id);
+         $category = CategoriesModel::findOrFail($id);
          if(is_null($category)){
-            return redirect('admin/404');
+            return view('admin.404');
          }
 
          $category->name = $request->name;
          $category->slug = $request->slug;
 
-         // ... Update other attributes
-
          $category->save();
          return back();
-         // Redirect or respond as needed
      }
 
 
@@ -103,17 +102,17 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Categories::find($id);
+        $category = CategoriesModel::find($id);
 
         if (is_null($category)) {
-            return redirect('admin/404');
+            return view('admin.404');
         }
 
         // Delete the category
         $category->delete();
 
         // Update associated ProductCategories
-        ProductCategories::where('idCategories', $id)->update(['idCategories' => 1]);
+        ProductCategoriesModel::where('idCategories', $id)->update(['idCategories' => 1]);
 
         return back();
     }

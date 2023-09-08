@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\ProductCategories;
+use App\Models\ProductCategoriesModel;
 
 class ProductCategoriesSeeder extends Seeder
 {
@@ -13,35 +13,35 @@ class ProductCategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'1',
             'idCategories'=>'2',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'1',
             'idCategories'=>'10',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'2',
             'idCategories'=>'2',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'2',
             'idCategories'=>'10',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'3',
             'idCategories'=>'2',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'3',
             'idCategories'=>'10',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'4',
             'idCategories'=>'2',
         ]);
-        ProductCategories::create([
+        ProductCategoriesModel::create([
             'idProduct'=>'4',
             'idCategories'=>'11',
         ]);

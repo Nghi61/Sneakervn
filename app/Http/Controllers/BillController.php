@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\BillModel;
 use App\Models\CartModel;
-use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+Paginator::useBootstrap();
 
 class BillController extends Controller
 {
@@ -13,7 +15,7 @@ class BillController extends Controller
      */
     public function index()
     {
-        $bills=BillModel::all();
+        $bills=BillModel::orderBy('created_at','desc')->paginate(10);
         foreach ($bills as $bill) {
             if ($bill->payment == 0) {
                 $bill->payment = 'Thanh toán khi nhận hàng';
@@ -41,17 +43,22 @@ class BillController extends Controller
                 $bill->status = 'Giao hàng thành công';
             }
         }
-        return view('Admin.Bill.index',['bills'=>$bills]);
+        return view('admin.Bill.index',['bills'=>$bills]);
     }
     public function cart(string $id){
         $cart=CartModel::where('idBill',$id)->get();
         if(is_null($cart)){
-            return view('Admin.404');
+            return view('admin.404');
         }
-        return view('Admin.Cart.index',['cart'=>$cart]);
+        return view('admin.Cart.index',['cart'=>$cart]);
     }
     public function destroy(string $id)
     {
-        //
+        $bill=BillModel::find($id);
+        if(is_null($bill)){
+            return view('admin.404');
+        }
+        $bill->delete();
+        return back();
     }
 }

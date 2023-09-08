@@ -10,10 +10,10 @@ class AdminController extends Controller
 {
     public function index()
     {
-       return view('Admin.home');
+       return view('admin.home');
     }
     public function login(){
-        return view('Admin.login');
+        return view('admin.login');
     }
 
     public function handle(Request $request)
@@ -31,9 +31,18 @@ class AdminController extends Controller
                 return redirect()->route('admin.login')->with('error', 'Tài khoản không đủ cấp bậc để truy cập');
             }
         }
-
         // Đăng nhập thất bại, xử lý lỗi hoặc điều hướng đến trang đăng nhập lại.
         return redirect()->route('admin.login')->with('error', 'Email hoặc mật khẩu không chính xác');
+    }
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/admin');
     }
 
 }
