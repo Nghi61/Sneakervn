@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('comments_blog', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idBlog');
-            $table->string('content');
+            $table->text('content');
             $table->string('idUser');
             $table->timestamps();
         });

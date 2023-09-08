@@ -104,7 +104,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
+                                    <tr>
+                                        <td>{{ $bills->onEachSide(10)->links()}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

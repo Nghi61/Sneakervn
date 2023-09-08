@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = ProductModel::where('id','desc')->paginate(10);
+        $product = ProductModel::orderBy('id','desc')->paginate(10);
         return view('admin.Products.index', ['product' => $product]);
     }
 
@@ -158,9 +158,9 @@ class ProductController extends Controller
         if(!is_null($Img)){
             $extension = $Img->getClientOriginalExtension();
             $urlname = $name . '.' . $extension;
-            $urlHinh = 'img/products/upload/' . $urlname;
+            $urlHinh = 'img/blog/upload/' . $urlname;
             if(!file_exists($urlname)){
-                $Img->move(public_path('img/products/upload'), $urlname);
+                $Img->move(public_path('img/blog/upload'), $urlname);
             }
             $sp->urlHinh = $urlHinh;
         }

@@ -33,7 +33,7 @@ VnSneaker - Bài Viết
                         </div>
                         <!-- /post meta -->
                         <div class="post-content">
-                            <p>{{ $blog->content }}</p>
+                            <p>{!! $blog->content !!}</p>
                         </div>
                         <!-- /post -->
                     </div>
@@ -64,7 +64,7 @@ VnSneaker - Bài Viết
                                                 <span class="comment-date">{{ $row->created_at }}</span>
                                             </div>
                                         </div>
-                                        <div class="comment-content">{{ $row->content }}</div>
+                                        <div class="comment-content">{!! $row->content !!}</div>
                                     </div>
                                 @endforeach
                             </div>
@@ -123,5 +123,6 @@ integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="ano
 <script src="{{ asset('js/comment-blog.js') }}"></script>
 <script>
     var commentBlogUrl = "{{ route('comment.blog') }}";
+    var count = parseInt("{{ $quantity }}");
 </script>
 @endsection

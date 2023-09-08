@@ -84,7 +84,10 @@
 
                                             </td>
                                         </tr>
-                                    @endforeach
+                                        @endforeach
+                                        <tr>
+                                            <td>{{ $product->onEachSide(10)->links()}}</td>
+                                        </tr>
 
                                 </tbody>
                             </table>

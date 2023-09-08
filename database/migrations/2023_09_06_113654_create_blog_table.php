@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('idUser');
-            $table->string('content');
+            $table->text('content');
             $table->string('urlHinh');
             $table->integer('view')->default(0);
             $table->string('slug');

@@ -28,11 +28,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link menu-link" href="#sidebarAcc" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarAcc">
                         <i class="ri-user-2-fill"></i> <span data-key="t-apps">Tài khoản</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
+                    <div class="collapse menu-dropdown" id="sidebarAcc">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="/admin/user/create" class="nav-link" data-key="t-calendar">Thêm mới</a>
@@ -44,11 +44,11 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link menu-link" href="#sidebarPro" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarPro">
                         <i class="ri-apps-2-line"></i> <span data-key="t-apps">Sản Phẩm</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
+                    <div class="collapse menu-dropdown" id="sidebarPro">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="/admin/product/create" class="nav-link" data-key="t-calendar">Thêm mới</a>
@@ -63,9 +63,36 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/admin/comments">
-                        <i class="ri-chat-1-fill"></i> <span data-key="t-widgets">Bình luận</span>
+                    <a class="nav-link menu-link" href="#sidebarPost" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarPost">
+                        <i class="ri-article-fill"></i> <span data-key="t-apps">Bài viết</span>
                     </a>
+                    <div class="collapse menu-dropdown" id="sidebarPost">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/blog/create" class="nav-link" data-key="t-calendar">Thêm mới</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/blog" class="nav-link" data-key="t-chat"> Danh sách </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarComment" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarComment">
+                        <i class="ri-chat-2-fill"></i> <span data-key="t-apps">Bình luận</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarComment">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/commentproduct" class="nav-link" data-key="t-chat"> Sản phẩm </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/commentblog" class="nav-link" data-key="t-chat">Bài viết</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/admin/contract">
@@ -75,6 +102,11 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/admin/bill">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Hóa đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/">
+                        <i class="ri-arrow-drop-left-fill"></i> <span data-key="t-widgets">Trở về Website</span>
                     </a>
                 </li>
             </ul>

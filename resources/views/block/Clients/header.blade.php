@@ -196,10 +196,6 @@
                                                     đơn hàng</a>
                                             </li>
                                             <li>
-                                                <a href="account.html"><i class="ti-package"></i>Đơn hàng của
-                                                    tôi</a>
-                                            </li>
-                                            <li>
                                                 <a href="/profile"><i class="ti-user"></i>Hồ sơ cá nhân</a>
                                             </li>
                                             <li>

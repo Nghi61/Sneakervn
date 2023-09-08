@@ -1,13 +1,13 @@
 @extends('layouts.Admin')
 @section('title')
-    VnSneaker - Danh sách phản hồi
+    VnSneaker - Danh sách bình luận
 @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Danh sách phản hồi</h4>
+                    <h4 class="card-title mb-0">Danh sách bình luận bài viết</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -39,15 +39,15 @@
                                                     value="option">
                                             </div>
                                         </th>
+                                        <th >Bài viết</th>
                                         <th >Người bình luận</th>
-                                        <th>Email</th>
                                         <th >Nội dung</th>
                                         <th>Ngày đăng</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($contract as $row)
+                                    @foreach ($comments as $row)
                                         <tr>
                                             <th scope="row">
                                                 <div class="form-check">
@@ -55,16 +55,16 @@
                                                         value="option1">
                                                 </div>
                                             </th>
-                                            <td>{{ $row->name}}</td>
-                                            <td>{{ $row->email}}</td>
-                                            <td >{{ $row->message}}</td>
+                                            <td class="img_product">{{$row->idBlog}}</td>
+                                            <td>{{ $row->idUser}}</td>
+                                            <td >{{ $row->content}}</td>
                                             <td >{{ $row->created_at}}</td>
                                             <td>
-                                                <form action="/admin/contract/{{ $row->id }}" method="post">
+                                                <form action="/admin/comments/{{ $row->id }}" method="post">
                                                     <div class="d-flex">
                                                         <div class="remove">
                                                             <button class="btn btn-sm btn-danger remove-item-btn"
-                                                                onclick="return confirm('Xác nhận xóa phản hồi của {{ $row->name}}?')"
+                                                                onclick="return confirm('Xác nhận xóa bình luận của {{ $row->idUser}}?')"
                                                                 type="submit">Xóa</button>
                                                             @csrf @method('DELETE')
                                                         </div>
@@ -74,9 +74,8 @@
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <td>{{ $contract->onEachSide(10)->links()}}</td>
+                                        <td>{{ $comments->onEachSide(10)->links()}}</td>
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>

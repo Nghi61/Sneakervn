@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Danh sách bình luận</h4>
+                    <h4 class="card-title mb-0">Danh sách bình luận sản phẩm</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -73,7 +73,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
+                                    <tr>
+                                        <td>{{ $comments->onEachSide(10)->links()}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

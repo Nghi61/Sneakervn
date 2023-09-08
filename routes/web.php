@@ -5,7 +5,9 @@ use App\Http\Controllers\BillController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\CommentsBlogController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\CommentsProductController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -42,7 +44,9 @@ Route::middleware('admin')->group(function(){
 
     Route::resource('/admin/categories', CategoriesController::class);
 
-    Route::resource('/admin/comments', CommentsController::class);
+    Route::resource('/admin/commentproduct', CommentsProductController::class);
+    
+    Route::resource('/admin/commentblog', CommentsBlogController::class);
 
     Route::resource('/admin/contract', ContractController::class);
 

@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogModel;
 use Illuminate\Http\Request;
-use App\Models\CommentsProductModel;
-use App\Models\ProductModel;
+use App\Models\CommentBlogModel;
 use App\Models\UserModel;
 use Illuminate\Pagination\Paginator;
 Paginator::useBootstrap();
 
-class CommentsProductController extends Controller
+class CommentsBlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $comments= CommentsProductModel::orderBy('id','desc')->paginate(10);
+        $comments= CommentBlogModel::orderBy('id','desc')->paginate(10);
         $user= UserModel::all();
-        $pro= ProductModel::all();
+        $pro= BlogModel::all();
         foreach($user as $row){
             foreach($comments as $comment){
                 if($comment->idUser==$row->id){
@@ -41,7 +41,7 @@ class CommentsProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $comment= CommentsProductModel::find($id);
+        $comment= CommentBlogModel::find($id);
         if(is_null($comment)){
             return view('admin.404');
         }

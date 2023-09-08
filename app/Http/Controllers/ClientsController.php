@@ -28,7 +28,7 @@ class ClientsController extends Controller
     {
         $NewProduct = ProductModel::orderBy('id', 'desc')->limit(10)->get();
 
-        $HotProduct = ProductModel::orderBy('view', 'desc')->limit(10)->get();
+        $HotProduct = ProductModel::orderBy('view', 'desc')->limit(4)->get();
 
         $blogs = BlogModel::orderBy('id', 'desc')->limit(4)->get();
 

@@ -261,7 +261,7 @@ VnSneaker - Trang chủ
                             <li>{{ $row->created_at->format('d/m/y')}}</li>
                         </ul>
                         <h4>{{$row->title}}</h4>
-                        <p>{{$row->content}}</p>
+                        <p>{!! mb_strimwidth($row->content, 0, 100, '...') !!}</p>
                     </a>
                 </div>
                 @endforeach

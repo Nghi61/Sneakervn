@@ -14,7 +14,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contract=ContractModel::where('id','desc')->paginate(10);
+        $contract=ContractModel::orderBy('id','desc')->paginate(10);
         return view('admin.Contract.index',['contract'=>$contract]);
     }
 

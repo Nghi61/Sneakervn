@@ -107,10 +107,16 @@
                                             <td class="customer_name">{{ $row->name }}</td>
                                             <td class="email">{{ $row->email }}</td>
                                             <td class="phone">{{ $row->phone }}</td>
-                                            <td class="date">{{ $row->created_at }}</td>
+                                            <td class="date">{{ $row->created_at->format('d/m/y')}}</td>
+                                            @if($row->role==1)
                                             <td class="status"><span
-                                                    class="badge bg-success-subtle text-success text-uppercase">{{ $row->role }}</span>
+                                                    class="badge bg-success-subtle text-success text-uppercase">Người dùng</span>
                                             </td>
+                                            @else
+                                            <td class="status"><span
+                                                class="badge bg-danger-subtle text-danger text-uppercase">Quản lý</span>
+                                        </td>
+                                        @endif
                                             <td>
                                                 <form action="/admin/user/{{ $row->id }}" method="post">
                                                     <ul class="list-inline hstack gap-2 mb-0">
@@ -133,7 +139,10 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                        @endforeach
+                                        <tr>
+                                            <td>{{ $user->onEachSide(10)->links()}}</td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>

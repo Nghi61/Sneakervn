@@ -64,7 +64,7 @@ $(document).ready(function() {
 
                     // Xóa nội dung trong ô textarea sau khi bình luận được đăng
                     $("#commentText").val("");
-                    var currentCount = parseInt("{{ $quantity }}");
+                    var currentCount = count;
                     currentCount++;
                     // Hiển thị giá trị mới của biến $dem
                     $("#quantity").text(currentCount);

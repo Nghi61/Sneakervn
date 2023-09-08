@@ -15,16 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user=UserModel::where('id','desc')->paginate(10);
-        foreach($user as $row){
-            if( $row->role==0){
-                $row->role='Quản lý';
-            }
-            else{
-                $row->role='Người dùng';
-            }
-
-        }
+        $user=UserModel::orderBy('id','desc')->paginate(10);
         return view('admin.User.index',['user'=>$user]);
     }
 

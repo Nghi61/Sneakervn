@@ -15,7 +15,7 @@
                         <div class="row g-4 mb-3">
                             <div class="col-sm-auto">
                                 <div>
-                                    <a href="/admin/product/create" class="btn btn-success add-btn"><i
+                                    <a href="/admin/blog/create" class="btn btn-success add-btn"><i
                                             class="ri-add-line align-bottom me-1"></i> Thêm</a>
                                     <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
@@ -42,15 +42,14 @@
                                             </div>
                                         </th>
                                         <th >Ảnh</th>
-                                        <th >Tên Sản Phẩm</th>
-                                        <th >Giá</th>
-                                        <th>Sale</th>
-                                        <th class="text-center">Số lượng</th>
+                                        <th >Tiêu đề</th>
+                                        <th >Người đăng</th>
+                                        <th>Ngày đăng</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($product as $row)
+                                    @foreach ($blog as $row)
                                         <tr>
                                             <th scope="row">
                                                 <div class="form-check">
@@ -60,22 +59,21 @@
                                             </th>
                                             <td class="img_product"><img src="{{ asset($row->urlHinh) }}"
                                                     alt=""></td>
-                                            <td>{{ $row->name }}</td>
-                                            <td >{{ $row->price }}</td>
-                                            <td >{{ $row->sale }}</td>
-                                            <td class="text-center"> {{ $row->quantity }}</td>
+                                            <td>{{ $row->title }}</td>
+                                            <td >{{ $row->userName }}</td>
+                                            <td >{{ $row->created_at->format('d/m/y') }}</td>
                                             <td>
-                                                <form action="/admin/product/{{ $row->id }}" method="post">
+                                                <form action="/admin/blog/{{ $row->id }}" method="post">
                                                     <div class="d-flex gap-2">
                                                         <div class="edit">
-                                                            <a href="/admin/product/{{ $row->id }}/edit"
+                                                            <a href="/admin/blog/{{ $row->id }}/edit"
                                                                 class="btn btn-sm btn-success edit-item-btn">
                                                                 Chỉnh
                                                             </a>
                                                         </div>
                                                         <div class="remove">
                                                             <button class="btn btn-sm btn-danger remove-item-btn"
-                                                                onclick="return confirm('Xác nhận xóa {{ $row->name }}?')"
+                                                                onclick="return confirm('Xác nhận xóa {{ $row->title }}?')"
                                                                 type="submit">Xóa</button>
                                                             @csrf @method('DELETE')
                                                         </div>
@@ -85,7 +83,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
+                                    <tr>
+                                        <td>{{ $blog->onEachSide(10)->links()}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
