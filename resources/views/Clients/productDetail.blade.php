@@ -53,7 +53,7 @@ VnSneaker - Sản Phẩm
                                             Mô tả
                                         </a>
                                     </h5>
-                                    <p>{{ $Pro->description }}</p>
+                                    <p>{!!$Pro->description !!}</p>
                                 </div>
                             </div>
                         </div>

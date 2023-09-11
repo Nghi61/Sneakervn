@@ -22,8 +22,11 @@
                             <div class="col-sm">
                                 <div class="d-flex justify-content-sm-end">
                                     <div class="search-box ms-2">
-                                        <input type="text" class="form-control search" placeholder="Tìm kiếm...">
-                                        <i class="ri-search-line search-icon"></i>
+                                        <form action="{{ route('commentblog.search') }}" method="post">
+                                            @csrf
+                                            <input type="text" name="kw" class="form-control search" placeholder="Tìm kiếm...">
+                                            <i class="ri-search-line search-icon"></i>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +63,7 @@
                                             <td >{{ $row->content}}</td>
                                             <td >{{ $row->created_at}}</td>
                                             <td>
-                                                <form action="/admin/comments/{{ $row->id }}" method="post">
+                                                <form action="/admin/commentproduct/{{ $row->id }}" method="post">
                                                     <div class="d-flex">
                                                         <div class="remove">
                                                             <button class="btn btn-sm btn-danger remove-item-btn"

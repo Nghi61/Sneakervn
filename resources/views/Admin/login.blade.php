@@ -11,7 +11,7 @@
     <title>VnSneaker - Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
 
     <!-- Layout config Js -->
     <script src="assets/js/layout.js"></script>
@@ -43,9 +43,9 @@
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
-                                                <a href="index.html" class="d-block">
-                                                    <img src="{{ asset('assets/images/logo-light.png') }}"
-                                                        alt="" height="18">
+                                                <a href="/admin/login" class="d-block">
+                                                    <img src="{{ asset('img/logo.svg') }}"
+                                                        alt="" width="100">
                                                 </a>
                                             </div>
                                             <div class="mt-auto">
@@ -80,7 +80,7 @@
 
                                                 <div class="mb-3">
                                                     <div class="float-end">
-                                                        <a href="auth-pass-reset-cover.html" class="text-muted">Quên
+                                                        <a href="{{ route('password.request') }}" class="text-muted">Quên
                                                             mật khẩu?</a>
                                                     </div>
                                                     <label class="form-label" for="password-input">Mật khẩu</label>

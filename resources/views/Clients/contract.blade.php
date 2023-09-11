@@ -50,14 +50,14 @@ VnSneaker - Liên hệ
                 <div class="col-lg-4 col-md-6 add_bottom_25">
                     <div class="form-group">
                         @if (Auth::check())
-                        <input class="form-control" required value="{{Auth::user()->name}}" type="text" name="name">
+                        <input class="form-control" required value="{{Auth::user()->name}}" placeholder="Họ tên*" type="text" name="name">
                         @else
                         <input class="form-control" required type="text" value="{{old('name')}}" placeholder="Họ tên*" name="name">
                         @endif
                     </div>
                     <div class="form-group">
                         @if (Auth::check())
-                        <input class="form-control" required type="email" value="{{Auth::user()->email}}" name="email">
+                        <input class="form-control" required type="email" value="{{Auth::user()->email}}" placeholder="Email *" name="email">
                         @else
                         <input class="form-control" required type="email" value="{{old('email')}}" placeholder="Email *" name="email">
                         @endif

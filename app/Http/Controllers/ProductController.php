@@ -290,4 +290,30 @@ class ProductController extends Controller
         }
         return back();
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->kw;
+            if(!is_null($keyword)){
+                $product = ProductModel::where('name', 'LIKE', '%' . $keyword . '%')->orderBy('id','desc')->paginate(5);
+            }
+            else{
+                $product=ProductModel::orderBy('id','desc')->paginate(10);
+            }
+        return view('admin.Products.index', ['product' => $product]);
+    }
+    public function delete(Request $request)
+    {
+        // Lấy danh sách các ô kiểm đã được chọn từ yêu cầu
+        $checkboxes = $request->input('checkboxes');
+
+        // Xóa dữ liệu của các dòng tương ứng với các ô kiểm đã chọn
+        foreach ($checkboxes as $checkbox) {
+            // Xóa dữ liệu từ bảng tương ứng
+            // Ví dụ: sử dụng Eloquent ORM để xóa dữ liệu từ bảng "Tin" dựa trên giá trị "id"
+            ProductModel::where('id', $checkbox)->delete();
+        }
+
+        // Điều hướng trở lại trang trước
+        return back();
+    }
 }

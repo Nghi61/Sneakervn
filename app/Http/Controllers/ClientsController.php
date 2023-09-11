@@ -182,7 +182,7 @@ class ClientsController extends Controller
     function search(Request $request)
     {
         $kw = $request->keyword;
-        $product = ProductModel::where('name', 'LIKE', '%' . $kw . '%')->paginate(10);
+        $product = ProductModel::where('name', 'LIKE', '%' . $kw . '%')->paginate(6);
         $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
         $sizes = SizeModel::select('size')->groupBy('size')->get();
         foreach ($cate as $row) {
@@ -220,7 +220,7 @@ class ClientsController extends Controller
         }
 
         // Use the extracted 'id' values to query the 'Products' table
-        $product = ProductModel::whereIn('id', $productIds)->paginate(10);
+        $product = ProductModel::whereIn('id', $productIds)->paginate(4);
 
         $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
         $sizes = SizeModel::select('size')->groupBy('size')->get();
@@ -233,7 +233,7 @@ class ClientsController extends Controller
     function sale()
     {
         $kw = "Giảm giá";
-        $product = ProductModel::where('sale', '>', 0)->paginate(10);
+        $product = ProductModel::where('sale', '>', 0)->paginate(4);
         $cate = CategoriesModel::whereNotIn('name', ['không xác định'])->get();
         $sizes = SizeModel::select('size')->groupBy('size')->get();
         foreach ($cate as $row) {
@@ -387,7 +387,7 @@ class ClientsController extends Controller
     }
     function blogAll(){
         // Lấy danh sách các bài viết theo thứ tự giảm dần của ID và phân trang
-        $blogs = BlogModel::orderBy('id', 'desc')->paginate(10);
+        $blogs = BlogModel::orderBy('id', 'desc')->paginate(4);
 
         // Lấy danh sách các người dùng và chuyển thành một mảng liên kết theo ID
         $users = UserModel::all()->keyBy('id');

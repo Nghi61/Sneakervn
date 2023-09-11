@@ -40,19 +40,39 @@ Route::middleware('admin')->group(function(){
 
     Route::resource('/admin/user', UserController::class);
 
+    Route::post('admin/user/search',[UserController::class,'search'])->name('user.search');
+
+    Route::post('admin/user/delete',[UserController::class,'delete'])->name('user.delete');
+
     Route::resource('/admin/product', ProductController::class);
+
+    Route::post('admin/product/search',[ProductController::class,'search'])->name('product.search');
+
+    Route::post('admin/product/delete',[ProductController::class,'delete'])->name('product.delete');
 
     Route::resource('/admin/categories', CategoriesController::class);
 
+    Route::post('admin/categories/deleteCate',[CategoriesController::class,'deleteCate'])->name('categories.delete');
+
     Route::resource('/admin/commentproduct', CommentsProductController::class);
-    
+
+    Route::post('admin/commentproduct/search',[CommentsProductController::class,'search'])->name('commentproduct.search');
+
     Route::resource('/admin/commentblog', CommentsBlogController::class);
+
+    Route::post('admin/commentblog/search',[CommentsBlogController::class,'search'])->name('commentblog.search');
 
     Route::resource('/admin/contract', ContractController::class);
 
+    Route::post('admin/contract/search',[ContractController::class,'search'])->name('contract.search');
+
     Route::resource('/admin/blog', BlogController::class);
 
+    Route::post('admin/blog/search',[BlogController::class,'search'])->name('blog.search');
+
     Route::resource('/admin/bill', BillController::class);
+
+    Route::post('admin/bill/search',[BillController::class,'search'])->name('bill.search');
 
     Route::get('admin/bill/{id}/cart',[BillController::class,'cart']);
 

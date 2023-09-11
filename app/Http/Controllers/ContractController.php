@@ -28,4 +28,16 @@ class ContractController extends Controller
         $contract->delete();
         return back();
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->kw;
+            if(!is_null($keyword)){
+                $contract = ContractModel::where('email', 'LIKE', '%' . $keyword . '%')->orderBy('id','desc')->paginate(10);
+            }
+            else{
+                $contract=ContractModel::orderBy('id','desc')->paginate(10);
+            }
+
+        return view('admin.Contract.index', ['contract' => $contract]);
+    }
 }

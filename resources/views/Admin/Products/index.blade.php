@@ -9,7 +9,6 @@
                 <div class="card-header">
                     <h4 class="card-title mb-0">Danh sách sản phẩm</h4>
                 </div><!-- end card header -->
-
                 <div class="card-body">
                     <div class="listjs-table" id="customerList">
                         <div class="row g-4 mb-3">
@@ -17,16 +16,27 @@
                                 <div>
                                     <a href="/admin/product/create" class="btn btn-success add-btn"><i
                                             class="ri-add-line align-bottom me-1"></i> Thêm</a>
-                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
+                                    <button class="btn btn-soft-danger" hidden id="btn_delete" type="submit"
+                                        onclick="return confirm('Bạn xác nhận muốn xóa tài khoản?')"><i
                                             class="ri-delete-bin-2-line"></i></button>
                                 </div>
                             </div>
                             <div class="col-sm">
-                                <div class="d-flex justify-content-sm-end">
-                                    <div class="search-box ms-2">
-                                        <input type="text" class="form-control search" placeholder="Tìm kiếm...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
+                                <div class="d-flex justify-content-end">
+                                    <form action="{{ route('product.search') }}" method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <input type="text" name="kw" class="form-control search"
+                                                    placeholder="Tìm kiếm...">
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </button>
+                                            </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -37,13 +47,12 @@
                                     <tr>
                                         <th scope="col" style="width: 50px;">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="checkAll"
-                                                    value="option">
+                                                <input class="form-check-input" type="checkbox" onclick="check()">
                                             </div>
                                         </th>
-                                        <th >Ảnh</th>
-                                        <th >Tên Sản Phẩm</th>
-                                        <th >Giá</th>
+                                        <th>Ảnh</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Giá</th>
                                         <th>Sale</th>
                                         <th class="text-center">Số lượng</th>
                                         <th>Hành động</th>
@@ -54,15 +63,15 @@
                                         <tr>
                                             <th scope="row">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="chk_child"
-                                                        value="option1">
+                                                    <input class="form-check-input" type="checkbox" onclick="anhien()"
+                                                        name="checkboxes[]" value="{{ $row->id }}">
                                                 </div>
                                             </th>
-                                            <td class="img_product"><img src="{{ asset($row->urlHinh) }}"
-                                                    alt=""></td>
+                                            <td class="img_product"><img src="{{ asset($row->urlHinh) }}" alt="">
+                                            </td>
                                             <td>{{ $row->name }}</td>
-                                            <td >{{ $row->price }}</td>
-                                            <td >{{ $row->sale }}</td>
+                                            <td>{{ $row->price }}</td>
+                                            <td>{{ $row->sale }}</td>
                                             <td class="text-center"> {{ $row->quantity }}</td>
                                             <td>
                                                 <form action="/admin/product/{{ $row->id }}" method="post">
@@ -84,19 +93,20 @@
 
                                             </td>
                                         </tr>
-                                        @endforeach
-                                        <tr>
-                                            <td>{{ $product->onEachSide(10)->links()}}</td>
-                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td>{{ $product->onEachSide(10)->links() }}</td>
+                                    </tr>
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div><!-- end card -->
-            </div>
-            <!-- end col -->
-        </div>
-        <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
     </div>
+@endsection
+@section('js')
+    <script src="{{ asset('assets/js/checkbox.js') }}"></script>
 @endsection

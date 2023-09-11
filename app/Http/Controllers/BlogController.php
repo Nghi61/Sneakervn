@@ -132,4 +132,15 @@ class BlogController extends Controller
         $blog->delete();
         return back();
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->kw;
+            if(!is_null($keyword)){
+                $blog = BlogModel::where('title', 'LIKE', '%' . $keyword . '%')->orderBy('id','desc')->paginate(10);
+            }
+            else{
+                $blog=BlogModel::orderBy('id','desc')->paginate(10);
+            }
+        return view('admin.Blog.index', ['blog' => $blog]);
+    }
 }

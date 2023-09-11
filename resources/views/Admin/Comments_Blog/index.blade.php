@@ -22,8 +22,11 @@
                             <div class="col-sm">
                                 <div class="d-flex justify-content-sm-end">
                                     <div class="search-box ms-2">
-                                        <input type="text" class="form-control search" placeholder="Tìm kiếm...">
-                                        <i class="ri-search-line search-icon"></i>
+                                        <form action="{{ route('commentproduct.search') }}" method="post">
+                                            @csrf
+                                            <input type="text" name="kw" class="form-control search" placeholder="Tìm kiếm...">
+                                            <i class="ri-search-line search-icon"></i>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

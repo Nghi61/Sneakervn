@@ -116,5 +116,20 @@ class CategoriesController extends Controller
 
         return back();
     }
+    public function deleteCate(Request $request)
+    {
+        // Lấy danh sách các ô kiểm đã được chọn từ yêu cầu
+        $checkboxes = $request->input('checkboxes');
+
+        // Xóa dữ liệu của các dòng tương ứng với các ô kiểm đã chọn
+        foreach ($checkboxes as $checkbox) {
+            // Xóa dữ liệu từ bảng tương ứng
+            // Ví dụ: sử dụng Eloquent ORM để xóa dữ liệu từ bảng "Tin" dựa trên giá trị "id"
+            CategoriesModel::where('id', $checkbox)->delete();
+        }
+
+        // Điều hướng trở lại trang trước
+        return back();
+    }
 
 }

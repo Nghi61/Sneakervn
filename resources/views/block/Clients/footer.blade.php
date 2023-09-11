@@ -15,7 +15,7 @@ $Categories = DB::table('Categories')
                         <li><a href="{{ route('help') }}">Chính sách</a></li>
                         <li><a href="{{ route('help') }}">Giúp đỡ</a></li>
                         <li><a href="{{ route('account') }}">Tài khoản</a></li>
-                        <li><a href="blog.html">Bài viết</a></li>
+                        <li><a href="{{ route('blog.all') }}">Bài viết</a></li>
                         <li><a href="{{ route('contract') }}">Liên hệ</a></li>
                     </ul>
                 </div>
@@ -71,16 +71,16 @@ $Categories = DB::table('Categories')
                     <li>
                         <div class="styled-select lang-selector">
                             <select>
-                                <option value="English" selected>Vietnamese</option>
-                                <option value="French">English</option>
+                                <option value="Vietnamese" selected>Vietnamese</option>
+                                <option value="English">English</option>
                             </select>
                         </div>
                     </li>
                     <li>
                         <div class="styled-select currency-selector">
                             <select>
-                                <option value="US Dollars" selected>VND</option>
-                                <option value="Euro">US Dollars</option>
+                                <option value="VND" selected>VND</option>
+                                <option value="US Dollar">US Dollars</option>
                             </select>
                         </div>
                     </li>

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <img src="{{ asset('img/logo_black.svg') }}" alt="">
+                        <img src="{{ asset('img/logo.svg') }}" alt="" width="100">
                     </a>
                 </div>
 

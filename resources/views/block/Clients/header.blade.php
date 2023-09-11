@@ -11,7 +11,7 @@
             <div class="row small-gutters">
                 <div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
                     <div id="logo">
-                        <a href="/"><img src="{{ asset('img/logo.svg') }}" alt="" width="100" height="35"></a>
+                        <a href="/"><img src="{{ asset('img/logo.svg') }}" alt="Logo VnSneaker" width="80"></a>
                     </div>
                 </div>
                 <nav class="col-xl-6 col-lg-7">
@@ -165,7 +165,7 @@
                                             <div class="clearfix">
                                                 <strong>Tổng:</strong><span>{{ number_format($totalAmount, 0, ',', '.') }}đ</span>
                                             </div>
-                                            <a href="" class="btn_1 outline">Chi tiết</a><a
+                                            <a href="{{ route('cart') }}" class="btn_1 outline">Chi tiết</a><a
                                                 href="{{ route('checkout.view') }}" class="btn_1">Thanh toán</a>
                                         </div>
                                     @endif

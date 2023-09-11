@@ -126,7 +126,7 @@ VnSneaker - Kết quả tìm kiếm
                                     @if (is_null($row->description))
                                         <p>Đang cập nhật..</p>
                                     @else
-                                        <p>{{ $row->description }}</p>
+                                        <p>{!!mb_strimwidth($row->description, 0, 50, '...') !!}</p>
                                     @endif
                                     <div class="price_box">
                                         @if ($row->sale > 0)
@@ -148,8 +148,8 @@ VnSneaker - Kết quả tìm kiếm
                                     </form>
                                 </div>
                             </div>
-                            <div class="text-center">{{ $product->onEachSide(10)->links()}}</div>
-                        @endforeach
+                            @endforeach
+                            <div class="text-center">{{ $product->onEachSide(4)->links()}}</div>
                     @endif
                 </div>
                 <!-- /col -->

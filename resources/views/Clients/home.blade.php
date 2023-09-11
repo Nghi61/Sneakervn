@@ -174,7 +174,7 @@ VnSneaker - Trang chủ
                                     <span class="new_price">{{ number_format(2000000, 0, ',', '.') }}đ</span>
                                     <span class="old_price">{{ number_format(2300000, 0, ',', '.') }}đ</span>
                                 </div>
-                                <a class="btn_1" href="listing-grid-1-full.html" role="button">Mua ngay</a>
+                                <a class="btn_1" href="{{ route('sale') }}" role="button">Mua ngay</a>
                             </div>
                         </div>
                     </div>

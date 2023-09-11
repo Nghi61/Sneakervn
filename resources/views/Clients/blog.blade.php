@@ -39,7 +39,7 @@ VnSneaker - Bài viết
                             <div class="post_info">
                                 <small>Đăng ngày: {{$blog->created_at->format('d/m/y')}}</small>
                                 <h2><a href="{{ route('blog', ['slug'=>$blog->slug]) }}">{{$blog->title}}</a></h2>
-                                <p>{{$blog->content}}</p>
+                                <p>{!! mb_strimwidth($blog->content, 0, 100, '...')!!}</p>
                                 <ul>
                                     <li>
                                         <div class="thumb"><img src="{{ asset('img/avatar/default.jpg') }}" alt=""></div> {{$blog->userName}}
@@ -51,7 +51,7 @@ VnSneaker - Bài viết
                         <!-- /article -->
                     </div>
                     @endforeach
-                    <div class="text-center">{{ $blogs->onEachSide(10)->links()}}</div>
+                    <div class="text-center">{{ $blogs->onEachSide(4)->links()}}</div>
                 </div>
                 <!-- /row -->
 

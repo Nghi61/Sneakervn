@@ -48,4 +48,32 @@ class CommentsBlogController extends Controller
         $comment->delete();
         return back();
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->kw;
+            if(!is_null($keyword)){
+                $comments = CommentBlogModel::where('content', 'LIKE', '%' . $keyword . '%')->orderBy('id','desc')->paginate(10);
+            }
+            else{
+                $comments=CommentBlogModel::orderBy('id','desc')->paginate(10);
+            }
+
+            $user= UserModel::all();
+            $pro= BlogModel::all();
+            foreach($user as $row){
+                foreach($comments as $comment){
+                    if($comment->idUser==$row->id){
+                        $comment->idUser=$row->name;
+                    }
+                }
+            };
+            foreach($pro as $row){
+                foreach($comments as $comment){
+                    if($comment->idProduct==$row->id){
+                        $comment->idProduct=$row->name;
+                    }
+                }
+            };
+        return view('admin.Comments_Blog.index', ['comments' => $comments]);
+    }
 }
